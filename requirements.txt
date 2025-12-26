@@ -1,0 +1,7 @@
+alpaca-trade-api
+pyportfolioopt
+python-dotenv
+google-generativeai
+pandas
+numpy
+cvxpy
