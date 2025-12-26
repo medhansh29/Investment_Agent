@@ -29,7 +29,7 @@ It is recommended to rebalance your portfolio to maintain your risk profile.
 
 Instruction:
 Run the agent in rebalance mode:
-> ./run_agent.sh interactive
+> ./run_agent.sh rebalance
 
 Your Investment Agent
 """
