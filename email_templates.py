@@ -71,9 +71,9 @@ Your Investment Agent
         """Generates content for Bi-Weekly Rebalance."""
         subject = "⚖️ Investment Agent: Bi-Weekly Rebalance Reminder"
         body = """
-Bi-Weekly Rebalance
+Weekly Rebalance
 -------------------
-It is time for your scheduled bi-weekly portfolio rebalance.
+It is time for your scheduled weekly portfolio rebalance.
 
 Regular rebalancing ensures your portfolio stays aligned with your risk tolerance and strategy settings.
 
