@@ -24,6 +24,7 @@ def main():
     # 1. Validate environment configuration
     if not Config.validate():
         print("Configuration incomplete. Please check your .env file.")
+        sys.exit(1)
         
     # 2. Initialize State Manager
     print("\nInitializing State Manager...")
