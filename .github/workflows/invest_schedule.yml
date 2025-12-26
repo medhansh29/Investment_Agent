@@ -1,0 +1,36 @@
+name: Investment Agent Invest
+
+on:
+  schedule:
+    # 09:30 PST 1st of Month = 17:30 UTC 1st of Month
+    - cron: '30 17 1 * *'
+  workflow_dispatch:
+
+jobs:
+  invest-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Monthly Invest Notification
+      env:
+        SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        # Config validation requires all keys
+        ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+        ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        python send_notification.py --template invest
