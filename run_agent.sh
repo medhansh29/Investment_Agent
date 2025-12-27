@@ -32,7 +32,33 @@ elif [ "$MODE" == "invest" ]; then
     trigger_email_template "invest"
 elif [ "$MODE" == "interactive" ]; then
     echo "--- Running Interactive Investment Mode ---"
-    python3 main.py --mode invest
+    
+    SUBMODE=$2
+    
+    if [ -z "$SUBMODE" ]; then
+        echo "Choose interactive mode:"
+        echo "1) rebalance (Bi-Weekly)"
+        echo "2) invest (Monthly)"
+        read -p "Enter choice [1/2]: " CHOICE
+        
+        if [ "$CHOICE" == "1" ] || [ "$CHOICE" == "rebalance" ]; then
+            SUBMODE="rebalance"
+        elif [ "$CHOICE" == "2" ] || [ "$CHOICE" == "invest" ]; then
+            SUBMODE="invest"
+        else
+            echo "Invalid choice. Exiting."
+            exit 1
+        fi
+    fi
+
+    if [ "$SUBMODE" == "rebalance" ]; then
+       python3 main.py --mode rebalance
+    elif [ "$SUBMODE" == "invest" ]; then
+       python3 main.py --mode invest
+    else
+       echo "Invalid interactive submode. Use 'rebalance' or 'invest'."
+       exit 1
+    fi
 else
     echo "Invalid mode. Please choose: daily, rebalance, invest, interactive"
     exit 1
