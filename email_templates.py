@@ -29,7 +29,7 @@ It is recommended to rebalance your portfolio to maintain your risk profile.
 
 Instruction:
 Run the agent in rebalance mode:
-> ./run_agent.sh rebalance
+> ./run_agent.sh interactive rebalance
 
 Your Investment Agent
 """
@@ -79,7 +79,7 @@ Regular rebalancing ensures your portfolio stays aligned with your risk toleranc
 
 Action Required:
 Please run the interactive mode to review and apply rebalancing trades:
-> ./run_agent.sh rebalance
+> ./run_agent.sh interactive rebalance
 
 Your Investment Agent
 """
@@ -99,7 +99,7 @@ Usage of Dollar-Cost Averaging (DCA) helps mitigate timing risk.
 
 Action Required:
 Please run the interactive mode to invest your monthly contribution:
-> ./run_agent.sh invest
+> ./run_agent.sh interactive invest
 
 Your Investment Agent
 """

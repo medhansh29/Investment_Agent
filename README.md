@@ -74,11 +74,18 @@ You can interact with the agent manually using the helper script:
 ### Interactive Mode
 The standard way to run the agent manually.
 ```bash
+# Verify and execute trades (Bi-Weekly Rebalance)
+./run_agent.sh interactive rebalance
+
+# Deploy monthly capital (Monthly Invest)
+./run_agent.sh interactive invest
+
+# Choose mode interactively
 ./run_agent.sh interactive
 ```
 
 ### Trigger Workflows Manually
-Simulate the automated alerts:
+Simulate the automated alerts (sends actionable notifications/emails):
 ```bash
 ./run_agent.sh rebalance   # Triggers Bi-Weekly Alert
 ./run_agent.sh invest      # Triggers Monthly Alert
