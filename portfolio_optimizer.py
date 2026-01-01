@@ -117,13 +117,14 @@ class PortfolioOptimizer:
             return {}, {}
 
         # 5. Calculate Actions (Diff)
-        actions = self._calculate_diff(allocation, current_positions)
+        actions = self._calculate_diff(allocation, current_positions, latest_prices)
         
         return actions, allocation
 
-    def _calculate_diff(self, target_allocation, current_positions):
+    def _calculate_diff(self, target_allocation, current_positions, latest_prices, threshold_value=50.0, drift_threshold=0.05):
         """
         Compares target allocation vs current positions to generate BUY/SELL/HOLD instructions.
+        Applies a threshold to prevent churning small amounts.
         """
         all_symbols = set(target_allocation.keys()) | set(current_positions.keys())
         actions = {}
@@ -140,7 +141,43 @@ class PortfolioOptimizer:
                 action_type = "SELL"
             else:
                 action_type = "HOLD"
+            
+            # CHECK THRESHOLD to prevent micro-adjustments
+            # Get current price
+            price = latest_prices.get(ticker, 0)
+            trade_value = abs(diff) * price
+            
+            # Logic:
+            # 1. If we are liquidating (Target=0), usually we want to sell even if small, 
+            #    unless it's dust (< $10). Let's be clean and allow liquidations > $10.
+            # 2. If we are keeping the stock (Target > 0), we don't want to trade just to adjust by $20.
+            
+            is_significant = True
+            
+            if action_type != "HOLD":
+                # Case A: Partial Adjustment (Target > 0)
+                if target_qty > 0:
+                    # Check 1: Dollar Value Threshold
+                    if trade_value < threshold_value:
+                        is_significant = False
+                    
+                    # Check 2: Relative Drift Threshold (prevent churning large positions)
+                    # e.g. Sell 1 share of 73 JNJ. Change = 1/73 = 1.3% < 5%. SKIP.
+                    if current_qty > 0:
+                        change_pct = abs(diff) / current_qty
+                        if change_pct < drift_threshold:
+                            is_significant = False
+
+                    if not is_significant:
+                        # Override to HOLD because the change is too small (churning)
+                        action_type = "HOLD"
+                        diff = 0
                 
+                # Case B: Full Liquidation (Target == 0)
+                else:
+                    # If it's literal dust (<$5), maybe ignore? But for now let's clean up positions.
+                    pass
+
             # Include significant trades OR significant holds (where we already own it)
             # We skip stocks we don't own and don't intend to buy (Target=0, Current=0)
             if action_type != "HOLD" or (action_type == "HOLD" and current_qty > 0):

@@ -44,7 +44,7 @@ class GeminiClient:
         
         persona_instructions = ""
         if risk_profile_str == "conservative":
-            persona_instructions = "AI Persona: Cautious. Warn about volatility. Suggest selling anything that moves too fast. Focus on stability."
+            persona_instructions = "AI Persona: Cautious. Focus on long-term stability. Distinguish between volatility and fundamental changes. Encourage accumulating quality defenses on dips (DCA)."
         elif risk_profile_str == "moderate" or risk_profile_str == "balanced":
             persona_instructions = "AI Persona: Analytical. Balance Buy recommendations with Hold warnings. Focus on steady growth and efficient risk/reward."
         elif risk_profile_str == "aggressive":
@@ -66,14 +66,28 @@ class GeminiClient:
              mode_instructions = """
              CONTEXT: This is a Monthly Investment Day. New capital IS being deployed.
              CRITICAL INSTRUCTION: Focus on where the new money is building the future.
-             - For Buys: "Deploying fresh capital here."
+             - For Buys: "Deploying fresh capital here." Note that these are likely NEW additions, not rebalancing shifts.
              """
 
         # 2. Construct Prompt
-        prompt = f"""
+        prompt = self._construct_rebalance_prompt(user_profile, actions, recent_prices_str, persona_instructions, mode_instructions)
+
+        print("Sending data to Gemini for analysis...")
+        
+        try:
+            response = self.model.generate_content(prompt)
+            # creating a raw string from the response to clean potential markdown
+            text = response.text.replace("```json", "").replace("```", "").strip()
+            return json.loads(text)
+        except Exception as e:
+            print(f"Gemini Error: {e}")
+            return None
+
+    def _construct_rebalance_prompt(self, user_profile, actions, recent_prices_str, persona_instructions, mode_instructions):
+        return f"""
         Role: You are a friendly, expert financial advisor named "Investment Agent".
         Task: Explain the following portfolio rebalancing recommendations to the user, "{user_profile.get('user_info', {}).get('name', 'User')}".
-        Risk Profile: {risk_profile_str.upper()}
+        Risk Profile: {user_profile.get('strategy_settings', {}).get('risk_profile', 'balanced').upper()}
         {persona_instructions}
         
         {mode_instructions}
@@ -93,7 +107,10 @@ class GeminiClient:
         3. Look at the "Action" (BUY/SELL/HOLD) for each stock in Input 2.
         4. **CRITICAL**: The user believes "Holding is important too". 
            - If the action is "HOLD", explicitly praise this decision.
-        5. **STRICT CONSTRAINT**: ONLY analyse stocks listed in "Input 2: Recommended Actions". 
+        5. **CRITICAL**: The user follows Dollar-Cost Averaging (DCA). Do NOT suggest selling defensive assets solely because of small price dips (this is bad advice for DCA). 
+           - If a defensive stock is being sold, explicitly state it is for "weight rebalancing" or "structural alignment" and NOT due to performance/dips.
+        6. **CRITICAL**: Do NOT suggest selling a winner solely because it went up (momentum), unless it is significantly overweight.
+        7. **STRICT CONSTRAINT**: ONLY analyse stocks listed in "Input 2: Recommended Actions". 
            - Do NOT discuss stocks that appear in "Input 3" but are NOT in "Input 2". 
            - Do NOT hallucinate holdings that the user does not have.
         6. Explain *WHY* the math recommends the action using the Market Context.
