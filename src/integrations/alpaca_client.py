@@ -1,5 +1,9 @@
+"""
+Module: alpaca_client.py
+Purpose: Wrapper for Alpaca Markets API (trading and market data).
+"""
 from alpaca_trade_api.rest import REST, TimeFrame
-from config import Config
+from src.core.config import Config
 from datetime import datetime, timedelta
 import pandas as pd
 

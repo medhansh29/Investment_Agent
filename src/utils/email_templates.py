@@ -1,3 +1,8 @@
+"""
+Module: email_templates.py
+Purpose: Provides HTML and Text templates for various email alerts 
+         (Daily Watchdog, Trade Confirmation, etc.).
+"""
 class EmailTemplates:
     @staticmethod
     def get_watchdog_content(movers):

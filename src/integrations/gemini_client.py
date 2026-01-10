@@ -1,5 +1,10 @@
+"""
+Module: gemini_client.py
+Purpose: Interface for Google Gemini AI. Handles prompt construction 
+         and reasoning for Advisor Reports and RAG analysis.
+"""
 import google.generativeai as genai
-from config import Config
+from src.core.config import Config
 import json
 import pandas as pd
 
@@ -110,11 +115,15 @@ class GeminiClient:
         5. **CRITICAL**: The user follows Dollar-Cost Averaging (DCA). Do NOT suggest selling defensive assets solely because of small price dips (this is bad advice for DCA). 
            - If a defensive stock is being sold, explicitly state it is for "weight rebalancing" or "structural alignment" and NOT due to performance/dips.
         6. **CRITICAL**: Do NOT suggest selling a winner solely because it went up (momentum), unless it is significantly overweight.
-        7. **STRICT CONSTRAINT**: ONLY analyse stocks listed in "Input 2: Recommended Actions". 
+        7. **MARKET KNOWLEDGE INJECTIONS** (Use these strict definitions):
+           - **LLY/NVO**: These are **Growth/Pharma**, NOT "Safe Defensive". Do not call them "Stability" plays. They are volatile.
+           - **Energy (XOM/CVX)** & **Defense (LMT)**: These are **Inflation/Conflict Hedges**. Selling them removes "insurance". Warn the user if selling.
+           - **Taxes**: If suggesting a Sell on a stock that has risen (check context), acknowledge the "Tax Drag" but explain why the rebalance is still worth it (e.g., risk reduction).
+        8. **STRICT CONSTRAINT**: ONLY analyse stocks listed in "Input 2: Recommended Actions". 
            - Do NOT discuss stocks that appear in "Input 3" but are NOT in "Input 2". 
            - Do NOT hallucinate holdings that the user does not have.
-        6. Explain *WHY* the math recommends the action using the Market Context.
-        7. Group the output into "Buys", "Sells", and "Holds".
+        9. Explain *WHY* the math recommends the action using the Market Context.
+        10. Group the output into "Buys", "Sells", and "Holds".
         
         Output Format: Return ONLY a valid JSON object. Do not wrap in markdown code blocks.
         {{

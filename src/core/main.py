@@ -1,9 +1,18 @@
-from config import Config
-from state_manager import StateManager
-from alpaca_client import AlpacaClient
-from portfolio_optimizer import PortfolioOptimizer
-from notification_service import NotificationService
-from email_templates import EmailTemplates
+"""
+Module: main.py
+Purpose: The Main Entry Point. Orchestrates the flow:
+         1. Initialize State
+         2. Authenticate Clients (Alpaca, Gemini)
+         3. Fetch Market Data & RAG Context
+         4. Optimize Portfolio
+         5. Generate AI Advice
+"""
+from src.core.config import Config
+from src.core.state_manager import StateManager
+from src.integrations.alpaca_client import AlpacaClient
+from src.strategies.portfolio_optimizer import PortfolioOptimizer
+from src.utils.notification_service import NotificationService
+from src.utils.email_templates import EmailTemplates
 import sys
 import argparse
 
@@ -128,9 +137,30 @@ def main():
             # Convert Alpaca Position objects to a simple dict
             current_positions_dict = {p.symbol: int(p.qty) for p in positions}
             
+            # --- RAG: Market Intelligence ---
+            from src.integrations.market_intelligence import MarketIntelligence
+            market_int = MarketIntelligence()
+            market_context = market_int.get_market_context()
+
+            # Display RAG Report
+            print("\n" + "="*40)
+            print("🌍 GLOBAL MARKET INTELLIGENCE REPORT")
+            print("="*40)
+            print(f"• Conflict Score:       {market_context.get('conflict_score', 'N/A')}/10")
+            print(f"• Inflation Score:      {market_context.get('inflation_score', 'N/A')}/10")
+            print(f"• Econ Instability:     {market_context.get('economic_instability_score', 'N/A')}/10")
+            print("-" * 40)
+            print(f"Analyst Insight: {market_context.get('reasoning', 'No insight available.')}")
+            print("="*40 + "\n")
+
             # Run Optimization
             risk_profile = current_state.get('strategy_settings', {}).get('risk_profile', 'balanced')
-            actions, allocation = optimizer.optimize(total_value, current_positions_dict, risk_profile=risk_profile)
+            actions, allocation = optimizer.optimize(
+                total_value, 
+                current_positions_dict, 
+                risk_profile=risk_profile,
+                market_context=market_context
+            )
             
             print("\n--- OPTIMIZED RECOMMENDATIONS ---")
             if not actions:
@@ -142,7 +172,7 @@ def main():
                 
                 # --- STEP 3B: THE AI ---
                 print("\n--- AI ANALYSIS (Step 3B) ---")
-                from gemini_client import GeminiClient
+                from src.integrations.gemini_client import GeminiClient
                 
                 # We assume Config has GEMINI_API_KEY
                 ai = GeminiClient()

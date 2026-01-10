@@ -1,6 +1,12 @@
+"""
+Module: notification_service.py
+Purpose: Handles sending email notifications and system alerts (macOS) 
+         to the user regarding agent activities.
+"""
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from src.core.config import Config
 import os
 import json
 from dotenv import load_dotenv

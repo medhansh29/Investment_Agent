@@ -1,7 +1,14 @@
 import sys
+"""
+Module: send_notification.py
+Purpose: CLI util to trigger email alerts manually or via cron.
+"""
 import argparse
-from notification_service import NotificationService
-from email_templates import EmailTemplates
+from src.utils.notification_service import NotificationService
+from src.utils.email_templates import EmailTemplates
+import json
+import os
+from src.core.state_manager import StateManager
 
 def main():
     parser = argparse.ArgumentParser(description='Send Investment Agent Notifications')

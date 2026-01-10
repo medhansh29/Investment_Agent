@@ -1,7 +1,12 @@
 import pandas as pd
-from pypfopt import expected_returns, risk_models
-from pypfopt.efficient_frontier import EfficientFrontier
+"""
+Module: portfolio_optimizer.py
+Purpose: Math Engine. Uses PyPortfolioOpt and 'Safe Fortress' logic to 
+         calculate optimal asset allocation based on Risk Profile.
+"""
+from pypfopt import EfficientFrontier, risk_models, expected_returns
 from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
+from src.core.config import Config
 
 class PortfolioOptimizer:
     def __init__(self, market_data_df):
@@ -23,17 +28,20 @@ class PortfolioOptimizer:
             return pivot
         return df
 
-    def optimize(self, current_portfolio_value, current_positions=None, risk_profile="balanced", constraints=None):
+    def optimize(self, current_portfolio_value, current_positions=None, risk_profile="balanced", constraints=None, market_context=None):
         """
         Calculates the Efficient Frontier based on risk profile and user constraints.
         
         risk_profile: 'high_growth', 'balanced', or 'conservative'.
         constraints: Dict {'force_include': ['TICKER'], 'force_exclude': ['TICKER']}
+        market_context: Dict {'conflict_score': 8, 'inflation_score': 4} (From RAG)
         """
         if current_positions is None:
             current_positions = {}
         if constraints is None:
             constraints = {}
+        if market_context is None:
+            market_context = {}
 
         print(f"\n--- Running Portfolio Optimization (Strategy: {risk_profile}) ---")
         if constraints:
@@ -49,7 +57,40 @@ class PortfolioOptimizer:
         # Add diversification constraint: Max 20% per stock
         ef = EfficientFrontier(mu, S, weight_bounds=(0, 0.20))
         
-        # Apply Logic Constraints
+        # Apple RAG / Thesis Constraints
+        # Logic: If Risk Score > Threshold, FORCE HOLD (New >= 0.95 * Current)
+        from config import Config
+        latest_prices = get_latest_prices(self.prices)
+        tickers_list = list(self.prices.columns)
+        
+        if market_context:
+            print("--- RAG: Analyzing Thesis Constraints ---")
+            for ticker, rule in Config.THESIS_CONSTRAINTS.items():
+                if ticker in current_positions and ticker in tickers_list:
+                    current_score = market_context.get(rule['risk_type'], 0)
+                    threshold = rule['threshold']
+                    
+                    if current_score >= threshold:
+                        # RAG Logic: Thesis is ACTIVE.
+                        # Rule: Do NOT Sell. Target Weight must be >= Current Weight.
+                        
+                        curr_val = current_positions[ticker] * latest_prices[ticker]
+                        curr_weight = curr_val / current_portfolio_value
+                        
+                        # Add Constraint: w[i] >= curr_weight
+                        # We use a tiny epsilon (0.99) to avoid floating point infeasibility if full lock is too tight,
+                        # but effectively this blocks selling.
+                        floor = curr_weight * 0.999 
+                        
+                        idx = tickers_list.index(ticker)
+                        ef.add_constraint(lambda w, i=idx, f=floor: w[i] >= f)
+                        
+                        print(f"  [Thesis PROTECTION] {ticker} ({rule['role']})")
+                        print(f"   -> {rule['risk_type']} is {current_score}/10 (High). Forced Hold.")
+
+        # Apply User-Defined constraints (Feedback loops)
+        # ... existing logic ...
+        
         tickers_list = list(self.prices.columns)
         
         # Force Exclude: Weight = 0
@@ -73,7 +114,66 @@ class PortfolioOptimizer:
             print(f"--- Strategy Mapper: Using logic for '{profile}' ---")
             
             if profile == "conservative":
-                # 1. Conservative: Minimize Volatility
+                # 1. Conservative: Fortress Mode
+                # Revert to min_volatility but with STRICT constraints to prevent dumping safe assets.
+                print("--- CONSERVATIVE MODE: Applying Fortress Constraints ---")
+                
+                # A. Protect Inflation Hedges & Core Staples (The "Fortress" List)
+                # We want to hold at least 90% of our existing position in these to prevent "naked" inflation exposure.
+                fortress_assets = ['KO', 'PG', 'JNJ', 'MCD', 'PEP', 'COST', 'XOM', 'CVX', 'LMT', 'RTX']
+                
+                # Get current weights to set floors
+                # We need to approximate current weight since we only have current_positions (qty) and latest_prices.
+                # Total value is passed in.
+                latest_prices = get_latest_prices(self.prices)
+                
+                for ticker in fortress_assets:
+                    if ticker in current_positions and ticker in tickers_list:
+                        # Calculate current weight
+                        curr_val = current_positions[ticker] * latest_prices[ticker]
+                        curr_weight = curr_val / current_portfolio_value
+                        
+                        # Constraint: New Weight >= 90% of Old Weight
+                        # (Allow small trimming for rebalance, but no dumping)
+                        floor = curr_weight * 0.90
+                        idx = tickers_list.index(ticker)
+                        ef.add_constraint(lambda w, i=idx, f=floor: w[i] >= f)
+                        print(f"  [Constraint] Protecting {ticker}: Min Weight {floor:.2%}")
+
+                # B. Anti-Casino Rule (Volatility Check)
+                # Do NOT increase position in High Vol assets (>35% Annualized Vol)
+                # Volatility is diagonal of Covariance Matrix (sqroot) * sqrt(252)
+                # But simpler: calculate individual vols from 'mu' helper or just std dev of returns
+                # returns = self.prices.pct_change().dropna()
+                # std_devs = returns.std() * np.sqrt(252)
+                
+                # We can access the cov matrix 'S' already calculated.
+                # Diagonal of S is ANNUALIZED variance (PyPortfolioOpt default).
+                # Sqrt(Variance) = Annualized Volatility.
+                import numpy as np # Ensure numpy is available
+                variances = np.diag(S)
+                vols = np.sqrt(variances)
+                
+                high_vol_threshold = 0.35
+                
+                for i, ticker in enumerate(tickers_list):
+                    vol = vols[i]
+                    if vol > high_vol_threshold:
+                        # Constraint: New Weight <= Current Weight
+                        # We cannot BUY more. We can Hold or Sell.
+                        if ticker in current_positions:
+                             curr_val = current_positions[ticker] * latest_prices[ticker]
+                             curr_weight = curr_val / current_portfolio_value
+                             curr_ceil = curr_weight # Cap at current ownership
+                        else:
+                             curr_ceil = 0.0 # Do not enter if we don't own
+                             
+                        ef.add_constraint(lambda w, idx=i, ceil=curr_ceil: w[idx] <= ceil)
+                        if curr_ceil < 0.01:
+                             print(f"  [Constraint] Blocking {ticker} (Vol: {vol:.1%}): Cannot Buy.")
+                        else:
+                             print(f"  [Constraint] Capping {ticker} (Vol: {vol:.1%}): Max Weight {curr_ceil:.2%}")
+
                 weights = ef.min_volatility()
                 
             elif profile == "moderate" or profile == "balanced":

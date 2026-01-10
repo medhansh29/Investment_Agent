@@ -1,8 +1,14 @@
+"""
+Module: state_manager.py
+Purpose: Manages persistence of user state (portfolio history, last run time) via JSON.
+"""
 import json
 import os
 from datetime import datetime
 
 class StateManager:
+    # Resolve path relative to this file: src/core/state_manager.py -> ../../data/user_state.json
+    DEFAULT_STATE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data', 'user_state.json')
     DEFAULT_STATE = {
         "user_info": {
             "name": "Alex",
@@ -18,8 +24,11 @@ class StateManager:
         "last_run": None
     }
 
-    def __init__(self, state_file="user_state.json"):
-        self.state_file = state_file
+    def __init__(self, state_file=None):
+        if state_file is None:
+            self.state_file = self.DEFAULT_STATE_PATH
+        else:
+            self.state_file = state_file
         self.state = self.load_state()
 
     def load_state(self):

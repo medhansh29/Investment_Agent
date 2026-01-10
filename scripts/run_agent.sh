@@ -2,20 +2,24 @@
 
 # --- Investment Agent Automation Script ---
 
-# Get absolute path to the script directory
+# Get absolute path to the script directory (scripts/)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$DIR"
+# Project Root is one level up
+PROJECT_ROOT="$(dirname "$DIR")"
+cd "$PROJECT_ROOT"
 
-# Helper function for actionable alerts
-# Helper function for email alerts
+# Set PYTHONPATH to Project Root so imports like 'from src.core...' work
+export PYTHONPATH=$PROJECT_ROOT
+
+# Helper function for email alerts (using send_notification.py in src/utils)
 trigger_email_template() {
     TEMPLATE_NAME=$1
     echo "Sending email alert (Template: $TEMPLATE_NAME)..."
-    python3 send_notification.py --template "$TEMPLATE_NAME"
+    python3 src/utils/send_notification.py --template "$TEMPLATE_NAME"
 }
 
 if [ -z "$1" ]; then
-    echo "Usage: ./run_agent.sh [daily|rebalance|invest|interactive]"
+    echo "Usage: ./scripts/run_agent.sh [daily|rebalance|invest|interactive]"
     exit 1
 fi
 
@@ -23,7 +27,7 @@ MODE=$1
 
 if [ "$MODE" == "daily" ]; then
     echo "--- Running Daily Watchdog ---"
-    python3 main.py --mode daily
+    python3 src/core/main.py --mode daily
 elif [ "$MODE" == "rebalance" ]; then
     echo "--- Checking Bi-Weekly Rebalance ---"
     trigger_email_template "rebalance"
@@ -52,9 +56,9 @@ elif [ "$MODE" == "interactive" ]; then
     fi
 
     if [ "$SUBMODE" == "rebalance" ]; then
-       python3 main.py --mode rebalance
+       python3 src/core/main.py --mode rebalance
     elif [ "$SUBMODE" == "invest" ]; then
-       python3 main.py --mode invest
+       python3 src/core/main.py --mode invest
     else
        echo "Invalid interactive submode. Use 'rebalance' or 'invest'."
        exit 1

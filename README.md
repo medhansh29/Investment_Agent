@@ -4,15 +4,26 @@ An automated, AI-powered portfolio manager designed to optimize your investments
 
 ## 🚀 Key Features
 
-### 1. Intelligent Portfolio Optimization
-- **Risk-Based Strategies**: Automatically adjusts optimization logic based on your profile:
-    - **Conservative**: Minimizes Volatility.
-    - **Balanced/Moderate**: Max Quadratic Utility (Risk Aversion 3).
-    - **Aggressive**: Max Sharpe Ratio.
-    - **Speculative**: Max Quadratic Utility (Risk Aversion 1).
-- **Diversification Constraints**: Enforces position limits (max 20% per asset) to prevent concentration risk.
+### 🧠 Thesis-Driven RAG (New!)
+The agent doesn't just look at prices; it reads the news.
+- **Market Intelligence**: Fetches live headlines from BBC World and Yahoo Finance.
+- **Context Awareness**: Uses Gemini AI to calculate real-time risk scores (0-10) for:
+  - **Global Conflict** (Protects Defense stocks like LMT, RTX)
+  - **Inflation Trend** (Protects Energy/Real Assets like XOM, CVX)
+  - **Economic Instability** (Protects Recession Shields like KO, PG, JNJ)
+- **Thesis Protection**: If the world is dangerous, the agent **refuses to sell** your insurance assets, even if they are up.
 
-### 2. Gemini AI Advisor
+### 🛡️ "Safe Fortress" Logic
+- **Anti-Casino Constraint**: In Conservative mode, the agent is mathematically blocked from buying high-volatility assets (>35% Ann. Vol) like Crypto or Meme stocks.
+- **Core Preservation**: Strict constraints prevent "dumping" your long-term winners. It forces the optimizer to build *around* your core positions.
+
+### 🤖 Intelligent Rebalancing
+- **Bi-Weekly Checkups**: Runs optimization to keep your portfolio aligned with your risk profile.
+- **Tax-Awareness**: The AI Advisor explains *why* a trade is happening, warning you if a sale might trigger a tax event but is necessary for risk reduction.
+
+### 🔍 Daily Watchdog
+- **Auto-Monitoring**: Checks your portfolio every morning.
+- **Smart Alerts**: Sends an email ONLY if a stock moves >10% intraday, prompting you to rebalance.
 - **Persona Injection**: The AI adapts its analysis tone to match your risk profile (e.g., warning about volatility for Conservative investors vs. hyping momentum for Speculative ones).
 - **Context Awareness**: Accurately distinguishes between "Rebalancing" (shifting assets) and "Investing" (deploying new cash).
 - **Interactive Feedback**: You can modify plans with natural language (e.g., *"I don't want to sell Tesla"*), and the agent re-optimizes accordingly.
@@ -69,39 +80,45 @@ chmod +x install_cron.sh
 
 ## 🖥️ Usage
 
-You can interact with the agent manually using the helper script:
+You can interact with the agent manually using the helper script in the `scripts/` folder:
 
 ### Interactive Mode
 The standard way to run the agent manually.
 ```bash
 # Verify and execute trades (Bi-Weekly Rebalance)
-./run_agent.sh interactive rebalance
+./scripts/run_agent.sh interactive rebalance
 
 # Deploy monthly capital (Monthly Invest)
-./run_agent.sh interactive invest
+./scripts/run_agent.sh interactive invest
 
 # Choose mode interactively
-./run_agent.sh interactive
+./scripts/run_agent.sh interactive
 ```
 
 ### Trigger Workflows Manually
 Simulate the automated alerts (sends actionable notifications/emails):
 ```bash
-./run_agent.sh rebalance   # Triggers Bi-Weekly Alert
-./run_agent.sh invest      # Triggers Monthly Alert
-./run_agent.sh daily       # Runs Daily Watchdog Check
+./scripts/run_agent.sh rebalance   # Triggers Bi-Weekly Alert
+./scripts/run_agent.sh invest      # Triggers Monthly Alert
+./scripts/run_agent.sh daily       # Runs Daily Watchdog Check
 ```
 
 ---
 
 ## 📂 File Structure
 
-- **`main.py`**: The brain. Orchestrates data fetching, optimization, and the interactive loop.
-- **`portfolio_optimizer.py`**: Handles the math (Efficient Frontier, Convex Optimization).
-- **`gemini_client.py`**: Handles AI reasoning, prompt generation, and feedback parsing.
-- **`alpaca_client.py`**: Wrapper for Alpaca API (Data & Trading).
-- **`run_agent.sh`**: Helper script for running creating the macOS alerts.
-- **`install_cron.sh`**: Setup script for automation.
+The project follows a modular **Source Layout**:
+
+- **`src/`**: Source Code
+  - **`core/`**: The Brain (`main.py`, `config.py`, `state_manager.py`)
+  - **`strategies/`**: The Math (`portfolio_optimizer.py`)
+  - **`integrations/`**: The Connections (`alpaca_client.py`, `gemini_client.py`)
+  - **`utils/`**: Helpers (`notifications`, `templates`)
+- **`scripts/`**: Automation Scripts
+  - **`run_agent.sh`**: Main entry point helper.
+  - **`install_cron.sh`**: Setup script for automation.
+- **`data/`**: Storage
+  - **`user_state.json`**: Portfolio history and settings.
 
 ---
 
