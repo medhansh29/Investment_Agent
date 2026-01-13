@@ -41,7 +41,8 @@ jobs:
         WEEK_NUM=$(date +%V)
         if [ $((WEEK_NUM % 2)) -eq 0 ]; then
           echo "Even week ($WEEK_NUM). Sending notification..."
-          python send_notification.py --template rebalance
+          export PYTHONPATH=$PYTHONPATH:.
+          python src/utils/send_notification.py --template rebalance
         else
           echo "Odd week ($WEEK_NUM). Skipping."
         fi

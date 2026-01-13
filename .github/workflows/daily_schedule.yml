@@ -35,4 +35,5 @@ jobs:
         SMTP_SERVER: smtp.gmail.com
         SMTP_PORT: 587
       run: |
-        python main.py --mode daily
+        export PYTHONPATH=$PYTHONPATH:.
+        python src/core/main.py --mode daily
