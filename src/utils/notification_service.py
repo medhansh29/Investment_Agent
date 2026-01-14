@@ -7,6 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from src.core.config import Config
+from src.core.state_manager import StateManager
 import os
 import json
 from dotenv import load_dotenv
@@ -19,7 +20,7 @@ class NotificationService:
         self.smtp_port = int(os.getenv("SMTP_PORT", 587))
         self.sender_email = os.getenv("SMTP_EMAIL")
         self.sender_password = os.getenv("SMTP_PASSWORD")
-        self.state_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'user_state.json')
+        self.state_file = StateManager.DEFAULT_STATE_PATH
 
     def get_recipient_email(self):
          # Read from user_state.json
