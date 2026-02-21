@@ -50,43 +50,63 @@ The agent runs autonomously in the cloud via GitHub Actions schedulers:
 
 ## 🛠️ Setup & Installation
 
-### 1. Requirements
+Follow these steps to deploy Aegis as your personal autonomous investment agent.
 
-Ensure you have Python 3.9+ and the following libraries:
+### 1. Clone & Install
 
 ```bash
+git clone https://github.com/medhansh29/Investment_Agent.git
+cd Investment_Agent
 pip install -r requirements.txt
 ```
 
-### 2. API Keys
+### 2. Obtaining API Keys
 
-Create a `.env` file in the project directory:
+Aegis relies on three free services to operate. You must obtain the following keys:
+
+1. **Alpaca Trading API (Broker)**:
+   - Go to the [Alpaca Dashboard](https://app.alpaca.markets/brokerage/dashboard/overview).
+   - Sign up and generate your **Paper Trading** API Key and Secret Key. Use Paper keys first to safely test the agent with play money!
+2. **Google Gemini (AI Brain)**:
+   - Go to [Google AI Studio](https://aistudio.google.com/app/apikey).
+   - Click "Create API Key" (the `gemini-1.5-flash` model used by this agent is free).
+3. **Gmail SMTP (Email Alerts)**:
+   - You need an App Password to allow the agent to send you Masterclass emails.
+   - Go to your Google Account -> Security -> 2-Step Verification -> [App Passwords](https://myaccount.google.com/apppasswords).
+   - Create a new App Password named "Aegis". It will be a 16-character string.
+
+### 3. Initialize Templates
+
+Copy the provided template files to create your personal local configuration.
+
+**Environment Variables:**
 
 ```bash
-ALPACA_API_KEY=your_key_here
-ALPACA_SECRET_KEY=your_secret_here
-GEMINI_API_KEY=your_gemini_key_here
-GMAIL_USER=your_gmail_here
-GMAIL_APP_PASSWORD=your_gmail_app_password
+cp .env.example .env
 ```
 
-### 3. Configuration (`user_state.json`)
+Open `.env` and paste the exact keys you generated in Step 2.
 
-Manage your profile, risk settings, and stock universe in `user_state.json`.
+**User State & Portfolio Memory:**
 
-```json
-{
-  "strategy_settings": {
-    "risk_profile": "high_growth",
-    "monthly_investment": 2000.0,
-    "universe": ["NVDA", "AAPL", "MSFT"]
-  }
-}
+```bash
+cp data/user_state.example.json data/user_state.json
 ```
 
-### 4. Enable Automation
+Open `data/user_state.json` and configure your `name`, `email`, baseline `monthly_investment` (e.g., $1000), and your `universe` of stock tickers you want the agent to track.
 
-Simply push the codebase to GitHub. The included `.github/workflows/` directory contains all necessary cron pipelines to run the agent in the cloud. Establish your API keys in the GitHub Repository Secrets.
+### 4. Enable Cloud Automation
+
+To have the agent run in the background 24/7 without keeping your computer on, simply push it to a private GitHub repository!
+
+1. Go to your repository **Settings** -> **Secrets and variables** -> **Actions**.
+2. Add the following **New repository secrets**:
+   - `ALPACA_API_KEY`
+   - `ALPACA_SECRET_KEY`
+   - `GEMINI_API_KEY`
+   - `SMTP_EMAIL` (Your Gmail address)
+   - `SMTP_PASSWORD` (Your 16-digit App Password)
+3. Under the **Actions** tab, ensure workflows are enabled. The `.github/workflows/` cron jobs will now automatically run the Daily Watchdog, Bi-Weekly Rebalance, and Monthly Investment loops.
 
 ---
 

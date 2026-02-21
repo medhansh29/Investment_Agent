@@ -1,0 +1,41 @@
+{
+  "user_info": {
+    "name": "Aegis Default User",
+    "age": 25,
+    "email": "your_email_address_here"
+  },
+  "strategy_settings": {
+    "risk_profile": "conservative",
+    "monthly_investment": 1000.0,
+    "lookback_years": 3,
+    "universe": [
+      "AAPL",
+      "MSFT",
+      "GOOGL",
+      "AMZN",
+      "META",
+      "TSLA",
+      "NVDA",
+      "BRK.B",
+      "JPM",
+      "V",
+      "JNJ",
+      "WMT",
+      "PG",
+      "MA",
+      "UNH",
+      "HD",
+      "BAC",
+      "XOM",
+      "CVX",
+      "KO",
+      "PEP",
+      "COST",
+      "MCD",
+      "TGT",
+      "DIS"
+    ]
+  },
+  "masterclass_history": [],
+  "last_run": null
+}
