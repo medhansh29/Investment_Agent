@@ -28,13 +28,14 @@ class PortfolioOptimizer:
             return pivot
         return df
 
-    def optimize(self, current_portfolio_value, current_positions=None, risk_profile="balanced", constraints=None, market_context=None):
+    def optimize(self, current_portfolio_value, current_positions=None, risk_profile="balanced", constraints=None, market_context=None, volatility_context=None):
         """
         Calculates the Efficient Frontier based on risk profile and user constraints.
         
         risk_profile: 'high_growth', 'balanced', or 'conservative'.
         constraints: Dict {'force_include': ['TICKER'], 'force_exclude': ['TICKER']}
         market_context: Dict {'conflict_score': 8, 'inflation_score': 4} (From RAG)
+        volatility_context: Dict {symbol: intraday_pct_change} (From Alpaca positions)
         """
         if current_positions is None:
             current_positions = {}
@@ -42,6 +43,8 @@ class PortfolioOptimizer:
             constraints = {}
         if market_context is None:
             market_context = {}
+        if volatility_context is None:
+            volatility_context = {}
 
         print(f"\n--- Running Portfolio Optimization (Strategy: {risk_profile}) ---")
         if constraints:
@@ -127,6 +130,22 @@ class PortfolioOptimizer:
                 # Total value is passed in.
                 latest_prices = get_latest_prices(self.prices)
                 
+                # First, check for volatility events and report them
+                volatile_fortress_assets = []
+                for ticker in fortress_assets:
+                    if ticker in volatility_context:
+                        vol_pct = volatility_context[ticker]
+                        if abs(vol_pct) > 0.10:  # 10% threshold
+                            volatile_fortress_assets.append((ticker, vol_pct))
+                
+                if volatile_fortress_assets:
+                    print("\n" + "="*60)
+                    print("⚠️  VOLATILITY ALERT: Significant Intraday Movements Detected")
+                    print("="*60)
+                    for ticker, vol_pct in volatile_fortress_assets:
+                        print(f"  • {ticker}: {vol_pct*100:+.2f}% intraday change")
+                    print("="*60 + "\n")
+                
                 for ticker in fortress_assets:
                     if ticker in current_positions and ticker in tickers_list:
                         # Calculate current weight
@@ -138,7 +157,20 @@ class PortfolioOptimizer:
                         floor = curr_weight * 0.90
                         idx = tickers_list.index(ticker)
                         ef.add_constraint(lambda w, i=idx, f=floor: w[i] >= f)
-                        print(f"  [Constraint] Protecting {ticker}: Min Weight {floor:.2%}")
+                        
+                        # Enhanced logging for volatile assets
+                        if ticker in volatility_context and abs(volatility_context[ticker]) > 0.10:
+                            vol_pct = volatility_context[ticker]
+                            print(f"  🛡️  [FORTRESS HOLD] {ticker}: Maintaining position despite {vol_pct*100:+.2f}% move")
+                            print(f"      → Min Weight: {floor:.2%} (Long-term defensive asset)")
+                            # Check if it's also a thesis constraint
+                            from src.core.config import Config
+                            if ticker in Config.THESIS_CONSTRAINTS:
+                                role = Config.THESIS_CONSTRAINTS[ticker]['role']
+                                print(f"      → Strategic Role: {role}")
+                                print(f"      → Rationale: Volatility is opportunity, not threat (DCA strategy)")
+                        else:
+                            print(f"  [Constraint] Protecting {ticker}: Min Weight {floor:.2%}")
 
                 # B. Anti-Casino Rule (Volatility Check)
                 # Do NOT increase position in High Vol assets (>35% Annualized Vol)

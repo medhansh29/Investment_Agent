@@ -21,6 +21,7 @@ class StateManager:
             "lookback_years": 3,
             "universe": ["AAPL", "MSFT", "GOOG", "TSLA", "NVDA", "KO"]
         },
+        "masterclass_history": [],
         "last_run": None
     }
 
@@ -65,3 +66,15 @@ class StateManager:
 
     def get_settings(self):
         return self.state["strategy_settings"]
+        
+    def get_masterclass_history(self):
+        """Retrieves the list of previously taught masterclass topics."""
+        return self.state.get("masterclass_history", [])
+        
+    def add_masterclass_topic(self, topic):
+        """Appends a new topic to the masterclass history."""
+        if "masterclass_history" not in self.state:
+            self.state["masterclass_history"] = []
+        if topic and topic not in self.state["masterclass_history"]:
+            self.state["masterclass_history"].append(topic)
+            self.save_state()

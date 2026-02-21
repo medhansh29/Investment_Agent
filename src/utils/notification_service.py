@@ -47,7 +47,7 @@ class NotificationService:
             msg['From'] = self.sender_email
             msg['To'] = recipient
             msg['Subject'] = subject
-            msg.attach(MIMEText(body, 'plain'))
+            msg.attach(MIMEText(body, 'html'))
 
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)
             server.starttls()

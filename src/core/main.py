@@ -21,6 +21,7 @@ def setup_parser():
     parser.add_argument('--mode', type=str, default='invest', choices=['daily', 'rebalance', 'invest'], 
                         help='Execution mode: daily (watchdog), rebalance, or invest (full optimization)')
     parser.add_argument('--auto', action='store_true', help='Execute trades automatically without confirmation')
+    parser.add_argument('--dry-run', action='store_true', help='Simulate execution and send emails without placing actual trades on Alpaca or saving state.')
     return parser
 
 def main():
@@ -93,8 +94,9 @@ def main():
             print("Suggest running: python3 main.py --mode rebalance")
             
             # Send Email Alert
+            user_name = current_state.get('user_info', {}).get('name', 'User')
             try:
-                subject, body = EmailTemplates.get_watchdog_content(movers)
+                subject, body = EmailTemplates.get_watchdog_content(movers, user_name)
                 ns = NotificationService()
                 ns.send_email(subject, body)
                 print("Email notification sent. Please run './run_agent.sh rebalance' to take action.")
@@ -103,11 +105,52 @@ def main():
                 
         else:
             print("No significant moves detected. Safe.")
+            user_name = current_state.get('user_info', {}).get('name', 'User')
+            
+            # --- Initiate Daily Pulse Masterclass ---
+            from src.integrations.market_intelligence import MarketIntelligence
+            from src.integrations.gemini_client import GeminiClient
+            
+            market_int = MarketIntelligence()
+            
+            print("\n  [Pulse] Fetching Market Context for Daily Masterclass...")
+            # We don't need the full Gemini reasoning here, just the raw headlines for Input 2
+            # but we use get_market_context() anyway caching the 'reasoning'
+            market_context = market_int.get_market_context() 
+            
+            # Extract raw RSS lines directly from the sources
+            all_headlines = []
+            for src in market_int.sources:
+                all_headlines.extend(market_int._fetch_rss(src))
+            unique_headlines = {item['title']: item for item in all_headlines}.values()
+            raw_headlines = list(unique_headlines)[:40]
+
+            positions_context = ""
+            for pos in positions:
+                try:
+                    pl_pct = float(getattr(pos, 'unrealized_intraday_plpc', 0)) * 100
+                except:
+                    pl_pct = 0.0
+                positions_context += f"- {pos.symbol}: Current Price ${float(pos.current_price):.2f} (Daily Change: {pl_pct:+.2f}%)\n"
+
+            masterclass_history = state_manager.get_masterclass_history()
+            ai = GeminiClient()
+            pulse_data = ai.generate_daily_pulse(positions_context, raw_headlines, user_name, masterclass_history)
+            
+            # Save the new topic to persistent memory
+            if pulse_data and "masterclass" in pulse_data and "topic" in pulse_data["masterclass"]:
+                state_manager.add_masterclass_topic(pulse_data["masterclass"]["topic"])
+                
             try:
-                subject, body = EmailTemplates.get_watchdog_safe_content(positions)
+                if pulse_data:
+                    subject, body = EmailTemplates.get_daily_pulse_content(pulse_data)
+                else:
+                    # Fallback to simple safe text if Gemini fails
+                    subject, body = EmailTemplates.get_watchdog_safe_content(positions, user_name)
+                    
                 ns = NotificationService()
                 ns.send_email(subject, body)
-                print("Daily safety confirmation email sent.")
+                print("Daily Pulse Masterclass email sent.")
             except Exception as e:
                 print(f"Failed to send email: {e}")
         
@@ -133,6 +176,15 @@ def main():
             # 1. Total Portfolio Value (Cash + Equity)
             total_value = float(account.portfolio_value)
             
+            # CAPITAL INJECTION FOR INVESTMENT MODE
+            if args.mode == 'invest':
+                monthly_inv = current_state.get('strategy_settings', {}).get('monthly_investment', 0.0)
+                if monthly_inv > 0:
+                    print(f"\n>>> INVESTMENT MODE: Injecting ${monthly_inv:,.2f} capital for optimization.")
+                    total_value += monthly_inv
+                else:
+                    print("\n>>> WARNING: Investment mode selected but 'monthly_investment' is 0 in user_state.json.")
+            
             # 2. Current Positions {Symbol: Qty}
             # Convert Alpaca Position objects to a simple dict
             current_positions_dict = {p.symbol: int(p.qty) for p in positions}
@@ -153,13 +205,24 @@ def main():
             print(f"Analyst Insight: {market_context.get('reasoning', 'No insight available.')}")
             print("="*40 + "\n")
 
+            # --- Extract Volatility Context ---
+            # Build volatility context from current positions
+            volatility_context = {}
+            for pos in positions:
+                try:
+                    intraday_change = float(getattr(pos, 'unrealized_intraday_plpc', 0))
+                    volatility_context[pos.symbol] = intraday_change
+                except:
+                    volatility_context[pos.symbol] = 0.0
+
             # Run Optimization
             risk_profile = current_state.get('strategy_settings', {}).get('risk_profile', 'balanced')
             actions, allocation = optimizer.optimize(
                 total_value, 
                 current_positions_dict, 
                 risk_profile=risk_profile,
-                market_context=market_context
+                market_context=market_context,
+                volatility_context=volatility_context
             )
             
             print("\n--- OPTIMIZED RECOMMENDATIONS ---")
@@ -176,7 +239,7 @@ def main():
                 
                 # We assume Config has GEMINI_API_KEY
                 ai = GeminiClient()
-                analysis = ai.analyze_rebalance(actions, market_data, current_state, mode=args.mode)
+                analysis = ai.analyze_rebalance(actions, market_data, current_state, mode=args.mode, volatility_context=volatility_context)
                 
                 if analysis:
                     print("\n> ADVISOR REPORT:")
@@ -184,66 +247,111 @@ def main():
                     if "buys" in analysis:
                         print("\n  [BUY RECOMMENDATIONS]")
                         for item in analysis["buys"]:
-                            print(f"  * {item['ticker']} ({item['qty']} shares): {item['reason']}")
+                            header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} shares):**")
+                            print(f"  * {header} {item.get('reason', '')}")
                             
                     if "sells" in analysis:
                         print("\n  [SELL RECOMMENDATIONS]")
                         for item in analysis["sells"]:
-                            print(f"  * {item['ticker']} ({item['qty']} shares): {item['reason']}")
+                            header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} shares):**")
+                            print(f"  * {header} {item.get('reason', '')}")
                             
                     if "holds" in analysis:
                         print("\n  [HOLDS / NOTES]")
                         for item in analysis["holds"]:
-                            print(f"  * {item['ticker']}: {item['reason']}")
+                            assets = item.get('assets', item.get('ticker', ''))
+                            print(f"  * {assets}: {item.get('reason', '')}")
                     
-            # --- STEP 4: INTERACTIVE EXECUTION ---
+            # --- STEP 4: INTERACTIVE OR AUTOMATED EXECUTION ---
             
             # Initial Recommendations are V1
             final_actions = actions
             universe_list = list(market_data.columns) if 'symbol' not in market_data.columns else list(market_data['symbol'].unique())
             
-            # ALWAYS INTERACTIVE
-            while True:
-                print("\n" + "="*40)
-                print("ACTION REQUIRED")
-                print("="*40)
-                user_choice = input("Do you want to [P]roceed with these trades, [M]odify the plan, or [C]ancel? (P/M/C): ").strip().lower()
+            def _send_rich_notification(final_actions_used):
+                ns = NotificationService()
                 
-                if user_choice == 'p':
-                    # PROCEED
+                # Default empty if no AI analysis was returned
+                safe_analysis = analysis if 'analysis' in locals() and analysis else {}
+                user_name = current_state.get('user_info', {}).get('name', 'User')
+
+                try:
+                    if args.mode == 'rebalance':
+                        subject, body = EmailTemplates.get_rebalance_content(market_context, safe_analysis, user_name)
+                        ns.send_email(subject, body)
+                        print("Rich rebalance email notification sent.")
+                    elif args.mode == 'invest':
+                        inv_amount = locals().get('monthly_inv', 0.0)
+                        subject, body = EmailTemplates.get_invest_content(inv_amount, market_context, safe_analysis, user_name)
+                        ns.send_email(subject, body)
+                        print("Rich investment email notification sent.")
+                except Exception as e:
+                    print(f"Warning: Failed to send rich email notification: {e}")
+
+            if args.auto:
+                print("\n" + "="*40)
+                print("AUTOMATED EXECUTION ACTIVE (--auto)")
+                print("="*40)
+                
+                if args.dry_run:
+                    print(">>> DRY RUN ACTIVE: Simulating trades and sending notification but NO actions will be executed on Alpaca.")
+                    _send_rich_notification(final_actions)
+                else:
+                    print("Proceeding with trades automatically...")
                     alpaca.execute_trades(final_actions)
                     state_manager.update_last_run()
-                    print("\n--- DONE. Investment Agent Finished. ---")
-                    break
+                    _send_rich_notification(final_actions)
+                
+                print("\n--- DONE. Automated Investment Agent Finished. ---")
+            else:
+                # ALWAYS INTERACTIVE
+                while True:
+                    print("\n" + "="*40)
+                    print("ACTION REQUIRED")
+                    print("="*40)
+                    user_choice = input("Do you want to [P]roceed with these trades, [M]odify the plan, or [C]ancel? (P/M/C): ").strip().lower()
                     
-                elif user_choice == 'm':
-                    # MODIFY
-                    feedback = input("\nEnter your feedback (e.g., 'I want to invest in NVDA and not in GE'): ")
-                    print("\n>>> Analyzing feedback with Gemini...")
-                    
-                    constraints = ai.interpret_feedback(feedback, universe_list)
-                    
-                    if constraints.get('force_include') or constraints.get('force_exclude'):
-                        print(f">>> Re-running Optimization with Constraints: {constraints}")
-                        actions_v2, _ = optimizer.optimize(total_value, current_positions_dict, risk_profile=risk_profile, constraints=constraints)
-                        
-                        print("\n--- MODIFIED RECOMMENDATIONS ---")
-                        if not actions_v2:
-                             print("Portfolio is balanced.")
+                    if user_choice == 'p':
+                        # PROCEED
+                        if args.dry_run:
+                            print(">>> DRY RUN ACTIVE: Simulating trades and sending notification but NO actions will be executed on Alpaca.")
+                            _send_rich_notification(final_actions)
                         else:
-                            for ticker, data in actions_v2.items():
-                                print(f"{ticker}: {data['action']} {data['qty']} shares")
+                            alpaca.execute_trades(final_actions)
+                            state_manager.update_last_run()
+                            _send_rich_notification(final_actions)
                         
-                        final_actions = actions_v2
+                        print("\n--- DONE. Investment Agent Finished. ---")
+                        break
+                        
+                    elif user_choice == 'm':
+                        # MODIFY
+                        feedback = input("\nEnter your feedback (e.g., 'I want to invest in NVDA and not in GE'): ")
+                        print("\n>>> Analyzing feedback with Gemini...")
+                        
+                        constraints = ai.interpret_feedback(feedback, universe_list)
+                        
+                        if constraints.get('force_include') or constraints.get('force_exclude'):
+                            print(f">>> Re-running Optimization with Constraints: {constraints}")
+                            actions_v2, _ = optimizer.optimize(total_value, current_positions_dict, risk_profile=risk_profile, constraints=constraints)
+                            
+                            print("\n--- MODIFIED RECOMMENDATIONS ---")
+                            if not actions_v2:
+                                 print("Portfolio is balanced.")
+                            else:
+                                for ticker, data in actions_v2.items():
+                                    print(f"{ticker}: {data['action']} {data['qty']} shares")
+                            
+                            final_actions = actions_v2
+                        else:
+                            print(">>> No actionable constraints found. Plan unchanged.")
+                            
+                    elif user_choice == 'c':
+                        # CANCEL
+                        print("Operation Cancelled.")
+                        break
                     else:
-                        print(">>> No actionable constraints found. Plan unchanged.")
-                        
-                elif user_choice == 'c':
-                    # CANCEL
-                    print("Operation Cancelled.")
-                    break
-                else:
-                    print("Invalid input. Please enter P, M, or C.")
+                        print("Invalid input. Please enter P, M, or C.")
 
         else:
             print("No market data returned.")

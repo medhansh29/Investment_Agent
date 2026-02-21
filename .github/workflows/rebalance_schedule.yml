@@ -3,46 +3,46 @@ name: Investment Agent Rebalance
 on:
   schedule:
     # 16:35 PST Friday = 00:35 UTC Saturday
-    - cron: '35 0 * * 6'
+    - cron: "35 0 * * 6"
   workflow_dispatch:
 
 jobs:
   rebalance-check:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Run Rebalance Notification (Bi-Weekly)
-      env:
-        SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
-        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-        SMTP_SERVER: smtp.gmail.com
-        SMTP_PORT: 587
-        # Note: We need other keys just in case config imports them, 
-        # though send_notification doesn't strictly need Alpaca to send email.
-        # But config.py validates them! So we MUST provide them.
-        ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
-        ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      run: |
-        # Check if Week Number is EVEN (approx bi-weekly)
-        WEEK_NUM=$(date +%V)
-        if [ $((WEEK_NUM % 2)) -eq 0 ]; then
-          echo "Even week ($WEEK_NUM). Sending notification..."
-          export PYTHONPATH=$PYTHONPATH:.
-          python src/utils/send_notification.py --template rebalance
-        else
-          echo "Odd week ($WEEK_NUM). Skipping."
-        fi
+      - name: Run Rebalance Notification (Bi-Weekly)
+        env:
+          SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SERVER: smtp.gmail.com
+          SMTP_PORT: 587
+          # Note: We need other keys just in case config imports them,
+          # though send_notification doesn't strictly need Alpaca to send email.
+          # But config.py validates them! So we MUST provide them.
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          # Check if Week Number is EVEN (approx bi-weekly)
+          WEEK_NUM=$(date +%V)
+          if [ $(( 10#$WEEK_NUM % 2 )) -eq 0 ]; then
+            echo "Even week ($WEEK_NUM). Running automated rebalance..."
+            export PYTHONPATH=$PYTHONPATH:.
+            python src/core/main.py --mode rebalance --auto
+          else
+            echo "Odd week ($WEEK_NUM). Skipping."
+          fi
