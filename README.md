@@ -68,8 +68,7 @@ Aegis relies on three free services to operate. You must obtain the following ke
    - Go to the [Alpaca Dashboard](https://app.alpaca.markets/brokerage/dashboard/overview).
    - Sign up and generate your **Paper Trading** API Key and Secret Key. Use Paper keys first to safely test the agent with play money!
 2. **Google Gemini (AI Brain)**:
-   - Go to [Google AI Studio](https://aistudio.google.com/app/apikey).
-   - Click "Create API Key" (the `gemini-1.5-flash` model used by this agent is free).
+   - Medhansh will provide you with the shared `GEMINI_API_KEY` to use.
 3. **Gmail SMTP (Email Alerts)**:
    - You need an App Password to allow the agent to send you Masterclass emails.
    - Go to your Google Account -> Security -> 2-Step Verification -> [App Passwords](https://myaccount.google.com/apppasswords).
