@@ -37,7 +37,7 @@ The agent doesn't just look at prices; it reads the news.
 
 The agent runs autonomously in the cloud via GitHub Actions schedulers:
 
-- **Daily Watchdog**: Checks your positions every weekday at 4:30 PM. Alerts you only if a stock moves >10%.
+- **Daily Watchdog**: Checks your positions every day at 4:30 PM. Alerts you only if a stock moves >10%.
 - **Bi-Weekly Tactical Rebalance**: Reminds you every two weeks to realign your portfolio.
 - **Monthly Investment Day**: Reminds you on the 1st of the month to deploy new capital.
 
