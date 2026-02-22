@@ -123,7 +123,10 @@ class PortfolioOptimizer:
                 
                 # A. Protect Inflation Hedges & Core Staples (The "Fortress" List)
                 # We want to hold at least 90% of our existing position in these to prevent "naked" inflation exposure.
-                fortress_assets = ['KO', 'PG', 'JNJ', 'MCD', 'PEP', 'COST', 'XOM', 'CVX', 'LMT', 'RTX']
+                fortress_assets = [
+                    'KO', 'PG', 'JNJ', 'MCD', 'PEP', 'COST', 'XOM', 'CVX', 'LMT', 'RTX',
+                    'BRK.B', 'CL', 'DUK', 'AEP', 'LIN'
+                ]
                 
                 # Get current weights to set floors
                 # We need to approximate current weight since we only have current_positions (qty) and latest_prices.

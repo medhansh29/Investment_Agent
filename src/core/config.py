@@ -66,4 +66,14 @@ class Config:
         'PFE':  {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Healthcare Defensive'},
         'ABBV': {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Healthcare Yield'},
         'UNH':  {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Healthcare Defensive'},
+        
+        # New Additions
+        'BRK.B': {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Diversified Defensive'},
+        'CL':    {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Consumer Staples'},
+        'HON':   {'risk_type': 'conflict_score', 'threshold': 6, 'role': 'Aerospace Defense'},
+        'MDT':   {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Medical Equipment'},
+        'BMY':   {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Pharma Defensive'},
+        'DUK':   {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Regulated Utility'},
+        'AEP':   {'risk_type': 'economic_instability_score', 'threshold': 6, 'role': 'Electric Grid'},
+        'LIN':   {'risk_type': 'inflation_score', 'threshold': 6, 'role': 'Industrial Materials'},
     }
