@@ -11,8 +11,8 @@ import pandas as pd
 class GeminiClient:
     def __init__(self):
         genai.configure(api_key=Config.GEMINI_API_KEY)
-        # Using latest flash model found in list
-        self.model = genai.GenerativeModel('gemini-flash-latest')
+        # Using 1.5-flash explicitly to get the 1500 req/day free tier (gemini-flash-latest maps to gemini-3-flash which has 20 req/day limit)
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
 
     def analyze_rebalance(self, actions, market_data_df, user_profile, mode='invest', volatility_context=None):
         """
