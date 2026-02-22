@@ -98,10 +98,10 @@ class MarketIntelligence:
         
         print("  [RAG] Analyzing World State via Gemini...")
         try:
-            response = self.client.model.generate_content(prompt)
-            text = response.text.replace("```json", "").replace("```", "").strip()
-            data = json.loads(text)
-            print(f"  [RAG] Result: Conflict={data.get('conflict_score')}, Inflation={data.get('inflation_score')}, Instability={data.get('economic_instability_score')}")
+            data = self.client._generate_with_fallback(prompt, "RAG")
+            if data is None:
+                raise Exception("Fallback router returned None (Both APIs failed)")
+            print(f"  [RAG] Result: Conflict={data.get('conflict_score', 5)}, Inflation={data.get('inflation_score', 5)}, Instability={data.get('economic_instability_score', 5)}")
             return data
         except Exception as e:
             print(f"  [RAG] Analysis Failed: {e}")

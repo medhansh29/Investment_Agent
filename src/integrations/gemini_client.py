@@ -11,8 +11,30 @@ import pandas as pd
 class GeminiClient:
     def __init__(self):
         genai.configure(api_key=Config.GEMINI_API_KEY)
-        # Using 1.5-flash explicitly to get the 1500 req/day free tier (gemini-flash-latest maps to gemini-3-flash which has 20 req/day limit)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # Using flash-latest for highest analytical quality (resolves to gemini-3-flash with 20 req/day cap)
+        self.primary_model = genai.GenerativeModel('gemini-flash-latest')
+        self.backup_model = genai.GenerativeModel('gemini-2.5-flash')
+
+    def _generate_with_fallback(self, prompt, context_name):
+        try:
+            response = self.primary_model.generate_content(prompt)
+            text = response.text.replace("```json", "").replace("```", "").strip()
+            return json.loads(text)
+        except Exception as e:
+            error_str = str(e)
+            # Catch 429 Rate Limits or 404 Missing Model errors, or JSON decoding failures
+            if "429" in error_str or "Quota" in error_str or "quota" in error_str or "404" in error_str or "escape" in error_str or "JSON" in error_str:
+                print(f"  [{context_name}] Primary Model Unavailable or Invalid JSON. Falling back to 2.5-flash...")
+                try:
+                    response = self.backup_model.generate_content(prompt)
+                    text = response.text.replace("```json", "").replace("```", "").strip()
+                    return json.loads(text)
+                except Exception as e2:
+                    print(f"  [{context_name}] Backup Model Error: {e2}")
+                    return None
+            else:
+                print(f"  [{context_name}] Primary Model Error: {e}")
+                return None
 
     def analyze_rebalance(self, actions, market_data_df, user_profile, mode='invest', volatility_context=None):
         """
@@ -80,16 +102,8 @@ class GeminiClient:
         # 2. Construct Prompt
         prompt = self._construct_rebalance_prompt(user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context)
 
-        print("Sending data to Gemini for analysis...")
-        
-        try:
-            response = self.model.generate_content(prompt)
-            # creating a raw string from the response to clean potential markdown
-            text = response.text.replace("```json", "").replace("```", "").strip()
-            return json.loads(text)
-        except Exception as e:
-            print(f"Gemini Error: {e}")
-            return None
+        print("  [Invest/Rebalance] Sending data to Gemini for analysis...")
+        return self._generate_with_fallback(prompt, "Invest/Rebalance")
 
     def _construct_rebalance_prompt(self, user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context):
         # Format volatility context for display
@@ -182,14 +196,9 @@ class GeminiClient:
           "force_exclude": ["TICKER2"]
         }}
         """
-        try:
-            print(f"Interpreting Feedback: '{feedback_text}'...")
-            response = self.model.generate_content(prompt)
-            text = response.text.replace("```json", "").replace("```", "").strip()
-            return json.loads(text)
-        except Exception as e:
-            print(f"Gemini Feedback Error: {e}")
-            return {"force_include": [], "force_exclude": []}
+        print(f"  [Feedback] Interpreting: '{feedback_text}'...")
+        res = self._generate_with_fallback(prompt, "Feedback")
+        return res if res else {"force_include": [], "force_exclude": []}
 
     def generate_daily_pulse(self, positions_context, market_context, user_name="User", masterclass_history=None):
         """
@@ -219,7 +228,7 @@ class GeminiClient:
         2. Market Catalyst & RAG Context: Write a 2-3 sentence macro summary of Wall Street using the headlines in Input 2. Pick 2-3 specific articles to link as `key_news`.
         3. Portfolio Context (The Consolidation Rule): Group the user's current holdings from Input 1 into a single array by macro `Sector` (e.g., "Tech & AI", "Defensive & Staples", "Healthcare"). Keep the rationale very concise and relevant to how that specific sector is reacting to the daily news. Ensure every ticker from Input 1 is included in the groups.
         4. Aegis Masterclass: Choose ONE fundamental trading or mathematical financial concept that helps the user build his trading skills. It MUST be a *new* topic that is not listed in Input 3. Build logically upon the previous topics. 
-        5. Math & Formula Formatting: You MUST use standard LaTeX for all formulas and mathematical equations in the masterclass. Enclose inline equations in `$` (e.g., $x = y$) and display equations in `$$` (e.g., $$RSI = 100 - \\frac{{100}}{{1 + RS}}$$). Do NOT use LaTeX for standard text.
+        5. Math & Formula Formatting: You MUST use standard LaTeX for all formulas and mathematical equations in the masterclass. Enclose inline equations in `$` (e.g., $x = y$) and display equations in `$$`. CRITICAL: Because you are returning a JSON object, you MUST strictly double-escape all LaTeX backslashes (e.g., use `\\\\beta` or `\\\\frac`) so it creates legally parseable JSON! Do NOT use LaTeX for standard text.
         6. Educational Reading: Curate EXACTLY 2 educational reading links (e.g., from Investopedia) that explain the concept further. (Make up a highly probable URL if unknown).
         7. Video Recommendation: Provide a YouTube search query URL for a video related to the topic (Format: "https://www.youtube.com/results?search_query=Your+Topic+Here").
 
@@ -268,10 +277,4 @@ class GeminiClient:
         """
         
         print("  [Pulse] Generating Daily Masterclass via Gemini...")
-        try:
-            response = self.model.generate_content(prompt)
-            text = response.text.replace("```json", "").replace("```", "").strip()
-            return json.loads(text)
-        except Exception as e:
-            print(f"Gemini Pulse Error: {e}")
-            return None
+        return self._generate_with_fallback(prompt, "Pulse")
