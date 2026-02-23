@@ -212,7 +212,7 @@ class EmailTemplates:
     def get_daily_pulse_content(pulse_data):
         """Generates HTML content for the new Daily Pulse Masterclass."""
         subject = "🎓 Aegis: Daily Pulse & Masterclass"
-        date_str = pulse_data.get("date", datetime.date.today().isoformat())
+        date_str = datetime.date.today().isoformat()
         user_name = pulse_data.get("user_name", "User")
         
         # 0. Market Overview
