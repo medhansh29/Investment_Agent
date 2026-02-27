@@ -71,13 +71,14 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-02-26",
+  "last_run": "2026-02-27",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
     "The Sharpe Ratio: Measuring Risk-Adjusted Returns",
     "The Treynor Ratio",
     "Jensen's Alpha (The Alpha)",
-    "The Information Ratio (IR)"
+    "The Information Ratio (IR)",
+    "The Sortino Ratio"
   ]
 }
