@@ -29,3 +29,7 @@ wheels/
 # Logs
 *.log
 *.err
+
+# Internal Testing
+fetch_alpaca_activities.py
+alpaca_daily_equity.csv

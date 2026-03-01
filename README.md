@@ -20,6 +20,13 @@ The agent doesn't just look at prices; it reads the news.
 - **Anti-Casino Constraint**: In Conservative mode, the agent is mathematically blocked from buying high-volatility assets (>35% Ann. Vol) like Crypto or Meme stocks.
 - **Core Preservation**: Strict constraints prevent "dumping" your long-term winners. It forces the optimizer to build _around_ your core positions.
 
+### 🎯 Smart Limit Orders (New!)
+
+Instead of executing blindly at market prices, Aegis computes **10-day forward volatility and drift forecasts**.
+
+- **Dynamic Limits**: Calculates the statistically probable "local low" for Buys, and "local high" for Sells individually for each stock based on its historical variance.
+- **Good-Till-Cancelled (GTC)**: Orders sit patiently on the books waiting for the perfect technical entry or exit within your 2-week execution block.
+
 ### 🤖 Intelligent Rebalancing
 
 - **Bi-Weekly Checkups**: Runs optimization to keep your portfolio aligned with your risk profile.

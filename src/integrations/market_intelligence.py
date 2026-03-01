@@ -14,11 +14,11 @@ class MarketIntelligence:
         self.client = GeminiClient()
         self.sources = [
             "http://feeds.bbci.co.uk/news/world/rss.xml",                             # BBC World
-            "https://finance.yahoo.com/news/rssindex",                                # Yahoo Finance
+            "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",                        # WSJ Business
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664", # CNBC Finance
             "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",                          # WSJ Markets
             "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",              # NYT Business
-            "https://www.ft.com/?format=rss"                                          # Financial Times
+            "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml"                # NYT Economy
         ]
 
     def _fetch_rss(self, url):
@@ -36,9 +36,11 @@ class MarketIntelligence:
                     if title is not None and title.text:
                         href = link.text if (link is not None and link.text) else ""
                         headlines.append({"title": title.text, "link": href})
+                if headlines:
+                    print(f"  [RAG] Fetched {len(headlines)} headlines from {url}")
                 return headlines[:15] # Top 15 per source
         except Exception as e:
-            print(f"Failed to fetch RSS from {url}: {e}")
+            print(f"  [RAG] Source skipped ({url}): {e}")
             return []
 
     def get_market_context(self):

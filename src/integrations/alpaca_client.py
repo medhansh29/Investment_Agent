@@ -102,21 +102,33 @@ class AlpacaClient:
         for ticker, data in actions.items():
             side = data['action'].lower()
             qty = data['qty']
+            limit_price = data.get('limit_price')
             
             if side == "hold" or qty <= 0:
                 continue
                 
-            print(f"Submitting Order: {side.upper()} {qty} of {ticker}...")
+            print(f"Submitting Order: LIMIT {side.upper()} {qty} of {ticker} @ ${limit_price:.2f}...")
             
             try:
-                # Assuming simple market orders for now
-                self.api.submit_order(
-                    symbol=ticker,
-                    qty=qty,
-                    side=side,
-                    type='market',
-                    time_in_force='day'
-                )
+                # Assuming basic limit orders for now
+                if limit_price:
+                    self.api.submit_order(
+                        symbol=ticker,
+                        qty=qty,
+                        side=side,
+                        type='limit',
+                        time_in_force='gtc',
+                        limit_price=limit_price
+                    )
+                else:
+                    # Fallback if no limit price was generated for some reason
+                    self.api.submit_order(
+                        symbol=ticker,
+                        qty=qty,
+                        side=side,
+                        type='market',
+                        time_in_force='day'
+                    )
                 print(f"  -> Order Submitted Successfully.")
             except Exception as e:
                 print(f"  -> FAILED to submit order: {e}")

@@ -231,7 +231,9 @@ def main():
             else:
                 # Print them nicely
                 for ticker, data in actions.items():
-                    print(f"{ticker}: {data['action']} {data['qty']} shares (Curr: {data['current']} -> Target: {data['target']})")
+                    action_str = f"LIMIT {data['action']}"
+                    limit_str = f" @ ${data.get('limit_price', 0.0):.2f}" if 'limit_price' in data else ""
+                    print(f"{ticker}: {action_str} {data['qty']} shares{limit_str} (Curr: {data['current']} -> Target: {data['target']})")
                 
                 # --- STEP 3B: THE AI ---
                 print("\n--- AI ANALYSIS (Step 3B) ---")
@@ -281,7 +283,7 @@ def main():
                         ns.send_email(subject, body)
                         print("Rich rebalance email notification sent.")
                     elif args.mode == 'invest':
-                        inv_amount = locals().get('monthly_inv', 0.0)
+                        inv_amount = current_state.get('strategy_settings', {}).get('monthly_investment', 0.0)
                         subject, body = EmailTemplates.get_invest_content(inv_amount, market_context, safe_analysis, user_name)
                         ns.send_email(subject, body)
                         print("Rich investment email notification sent.")

@@ -30,10 +30,10 @@ if [ "$MODE" == "daily" ]; then
     python3 src/core/main.py --mode daily
 elif [ "$MODE" == "rebalance" ]; then
     echo "--- Checking Bi-Weekly Rebalance ---"
-    trigger_email_template "rebalance"
+    python3 src/core/main.py --mode rebalance --auto
 elif [ "$MODE" == "invest" ]; then
     echo "--- Checking Monthly Investment ---"
-    trigger_email_template "invest"
+    python3 src/core/main.py --mode invest --auto
 elif [ "$MODE" == "interactive" ]; then
     echo "--- Running Interactive Investment Mode ---"
     

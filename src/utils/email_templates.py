@@ -92,22 +92,24 @@ class EmailTemplates:
              return "<p>No trades executed.</p>"
              
         import re
-        html = "<h2 class='section-title'>🔄 Executed Rebalancing Trades</h2>"
+        html = "<h2 class='section-title'>🔄 Executed Trades</h2>"
         if analysis.get("buys"):
-            html += f"<h3 style='color: #27ae60; margin-top: 15px;'>🟢 BUY EXECUTIONS</h3>"
+            html += f"<h3 style='color: #27ae60; margin-top: 15px;'>🟢 LIMIT BUY EXECUTIONS (GTC)</h3>"
             html += "<ul style='list-style-type: none; padding-left: 0;'>"
             for item in analysis["buys"]:
-                 header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} Shares):**")
+                 limit_str = f" @ Limit ${item.get('limit_price', 0.0):.2f}" if 'limit_price' in item else ""
+                 header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} Shares{limit_str}):**")
                  reason = item.get('reason', '')
                  header_html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', header)
                  reason_html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', reason)
                  html += f"<li style='margin-bottom: 10px;'>{header_html} {reason_html}</li>"
             html += "</ul>"
         if analysis.get("sells"):
-            html += f"<h3 style='color: #e74c3c; margin-top: 15px;'>🔴 SELL EXECUTIONS</h3>"
+            html += f"<h3 style='color: #e74c3c; margin-top: 15px;'>🔴 LIMIT SELL EXECUTIONS (GTC)</h3>"
             html += "<ul style='list-style-type: none; padding-left: 0;'>"
             for item in analysis["sells"]:
-                 header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} Shares):**")
+                 limit_str = f" @ Limit ${item.get('limit_price', 0.0):.2f}" if 'limit_price' in item else ""
+                 header = item.get('header', f"**{item.get('ticker', '')} ({item.get('qty', '')} Shares{limit_str}):**")
                  reason = item.get('reason', '')
                  header_html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', header)
                  reason_html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', reason)
@@ -126,7 +128,7 @@ class EmailTemplates:
                  holds_html += f"<tr><td style='padding: 10px; border: 1px solid #bdc3c7;'><strong>{assets}</strong></td><td style='padding: 10px; border: 1px solid #bdc3c7;'>{reason_html}</td></tr>"
             holds_html += f"</table>"
             
-        if html == "<h2 class='section-title'>🔄 Executed Rebalancing Trades</h2>":
+        if html == "<h2 class='section-title'>🔄 Executed Trades</h2>":
             html = ""
             
         return html + holds_html if (html or holds_html) else "<p>No trades executed.</p>"

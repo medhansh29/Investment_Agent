@@ -187,7 +187,8 @@ class PortfolioOptimizer:
                 # Sqrt(Variance) = Annualized Volatility.
                 import numpy as np # Ensure numpy is available
                 variances = np.diag(S)
-                vols = np.sqrt(variances)
+                vols_array = np.sqrt(variances)
+                vols = pd.Series(vols_array, index=tickers_list)
                 
                 high_vol_threshold = 0.35
                 
@@ -251,12 +252,12 @@ class PortfolioOptimizer:
             print(f"Optimization Failed: {e}")
             return {}, {}
 
-        # 5. Calculate Actions (Diff)
-        actions = self._calculate_diff(allocation, current_positions, latest_prices)
+        # 5. Calculate Actions (Diff) with 10-Day Volatility Limits
+        actions = self._calculate_diff(allocation, current_positions, latest_prices, mu=mu, vols=vols)
         
         return actions, allocation
-
-    def _calculate_diff(self, target_allocation, current_positions, latest_prices, threshold_value=50.0, drift_threshold=0.05):
+    
+    def _calculate_diff(self, target_allocation, current_positions, latest_prices, mu=None, vols=None, threshold_value=50.0, drift_threshold=0.05):
         """
         Compares target allocation vs current positions to generate BUY/SELL/HOLD instructions.
         Applies a threshold to prevent churning small amounts.
@@ -313,6 +314,33 @@ class PortfolioOptimizer:
                     # If it's literal dust (<$5), maybe ignore? But for now let's clean up positions.
                     pass
 
+            # Calculate 10-Day Targeted Limit Price (if we have mu and vols)
+            limit_price = price
+            import numpy as np
+            # Now vols is guaranteed to be a Series if it originated from mu calculation
+            if mu is not None and vols is not None and hasattr(mu, 'index') and hasattr(vols, 'index') and ticker in mu.index and ticker in vols.index:
+                idx = list(mu.index).index(ticker)
+                annual_drift = mu.iloc[idx]
+                annual_vol = vols.loc[ticker]
+                
+                # Convert to 10 trading days (2 weeks)
+                drift_10d = annual_drift * (10 / 252)
+                vol_10d = annual_vol * np.sqrt(10 / 252)
+                
+                if action_type == "BUY":
+                    # We expect price to dip. 
+                    expected_low = price * (1 + drift_10d - vol_10d)
+                    # Cap the buy limit at a minimum 0.5% discount so we don't accidentally buy above market
+                    max_buy_price = price * 0.995
+                    limit_price = min(max_buy_price, expected_low)
+                    
+                elif action_type == "SELL":
+                    # We expect price to rip.
+                    expected_high = price * (1 + drift_10d + vol_10d)
+                    # Cap the sell limit at a minimum 0.5% premium
+                    min_sell_price = price * 1.005
+                    limit_price = max(min_sell_price, expected_high)
+
             # Include significant trades OR significant holds (where we already own it)
             # We skip stocks we don't own and don't intend to buy (Target=0, Current=0)
             if action_type != "HOLD" or (action_type == "HOLD" and current_qty > 0):
@@ -321,7 +349,8 @@ class PortfolioOptimizer:
                     "action": action_type,
                     "qty": abs(diff),
                     "current": current_qty,
-                    "target": target_qty
+                    "target": target_qty,
+                    "limit_price": round(limit_price, 2)
                 }
                 
         return actions
