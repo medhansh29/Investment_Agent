@@ -46,6 +46,20 @@ class AlpacaClient:
                 time.sleep(1)
         return []
 
+    def clear_open_orders(self):
+        """Cancels all open limit orders so they don't lock buying power and duplicate on next rebalance."""
+        print("--- Clearing Prior Stale Orders ---")
+        try:
+            cancelled = self.api.cancel_all_orders()
+            if cancelled:
+                print(f"Successfully cancelled {len(cancelled)} open orders.")
+            else:
+                print("No open orders to clear.")
+            return True
+        except Exception as e:
+            print(f"Error cancelling orders: {e}")
+            return False
+
     def get_market_data(self, symbols, lookback_years=3):
         """
         Fetches historical data for the given symbols.

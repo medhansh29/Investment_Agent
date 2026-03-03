@@ -55,6 +55,12 @@ def main():
     # 3. Initialize Alpaca Client (Step 2)
     print("\n--- Connecting to Alpaca (Step 2) ---")
     alpaca = AlpacaClient()
+
+    # Clear stale Limit Orders from last run before fetching settled cash balance
+    if args.mode in ['invest', 'rebalance']:
+         import time
+         alpaca.clear_open_orders()
+         time.sleep(2) # Give Alpaca REST API a second to update Buying Power and Unfreeze stocks natively.
     
     # A. Get Account Summary
     account = alpaca.get_account()
