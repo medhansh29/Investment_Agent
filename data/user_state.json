@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-04",
+  "last_run": "2026-03-05",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -84,6 +84,7 @@
     "The Calmar Ratio",
     "Value at Risk (VaR)",
     "Conditional Value at Risk (CVaR)",
-    "The Omega Ratio"
+    "The Omega Ratio",
+    "The M-Squared (M2) Measure"
   ]
 }
