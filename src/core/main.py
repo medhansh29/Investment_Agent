@@ -97,7 +97,7 @@ def main():
             print("\n!!! SIGNIFICANT MARKET MOVES DETECTED !!!")
             for sym, pct in movers:
                 print(f"{sym}: {pct*100:+.2f}%")
-            print("Suggest running: python3 main.py --mode rebalance")
+            print("Triggering automatic rebalance...")
             
             # Send Email Alert
             user_name = current_state.get('user_info', {}).get('name', 'User')
@@ -105,9 +105,24 @@ def main():
                 subject, body = EmailTemplates.get_watchdog_content(movers, user_name)
                 ns = NotificationService()
                 ns.send_email(subject, body)
-                print("Email notification sent. Please run './run_agent.sh rebalance' to take action.")
+                print("Email notification sent.")
             except Exception as e:
                 print(f"Failed to send email alert: {e}")
+                
+            print("\n>>> INITIATING AUTOMATIC REBALANCE DUE TO HIGH VOLATILITY <<<")
+            args.mode = 'rebalance'
+            args.auto = True
+            
+            import time
+            print("Clearing open orders before rebalance...")
+            alpaca.clear_open_orders()
+            time.sleep(2)
+            
+            account = alpaca.get_account()
+            if account:
+                print(f"Account Status: {account.status}")
+                print(f"Buying Power: ${float(account.buying_power):,.2f}")
+                print(f"Portfolio Value: ${float(account.portfolio_value):,.2f}")
                 
         else:
             print("No significant moves detected. Safe.")
@@ -160,9 +175,9 @@ def main():
             except Exception as e:
                 print(f"Failed to send email: {e}")
         
-        # Update last run time
-        state_manager.update_last_run()
-        sys.exit(0) # Daily check done
+            # Update last run time
+            state_manager.update_last_run()
+            sys.exit(0) # Daily check done
 
     # C. Fetch Market Data (with Cache)
     universe = state_manager.get_universe()

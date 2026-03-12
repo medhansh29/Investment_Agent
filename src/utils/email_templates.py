@@ -174,9 +174,8 @@ class EmailTemplates:
                     <h2 class='section-title'>Portfolio Watchlist</h2>
                     {portfolio_rows}
                     
-                    <h2 class='section-title'>Instruction</h2>
-                    <p>Run the agent in rebalance mode:<br>
-                    <code>./run_agent.sh interactive rebalance</code></p>
+                    <h2 class='section-title'>Action Taken</h2>
+                    <p>Aegis is currently running an automated rebalance sequence directly in response to this alert. A final summary will follow.</p>
                 </div>
                 <div class='footer'>Aegis - Your Autonomous Investment Agent</div>
             </div>
