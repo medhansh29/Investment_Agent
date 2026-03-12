@@ -36,7 +36,7 @@ class GeminiClient:
                 print(f"  [{context_name}] Primary Model Error: {e}")
                 return None
 
-    def analyze_rebalance(self, actions, market_data_df, user_profile, mode='invest', volatility_context=None):
+    def analyze_rebalance(self, actions, market_data_df, user_profile, mode='invest', volatility_context=None, volatility_trigger=None):
         """
         Generates a user-friendly report explaining the rebalancing actions.
         
@@ -100,21 +100,27 @@ class GeminiClient:
              """
 
         # 2. Construct Prompt
-        prompt = self._construct_rebalance_prompt(user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context)
+        prompt = self._construct_rebalance_prompt(user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context, volatility_trigger)
 
         print("  [Invest/Rebalance] Sending data to Gemini for analysis...")
         return self._generate_with_fallback(prompt, "Invest/Rebalance")
 
-    def _construct_rebalance_prompt(self, user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context):
+    def _construct_rebalance_prompt(self, user_profile, actions, recent_prices_str, persona_instructions, mode_instructions, volatility_context, volatility_trigger=None):
         # Format volatility context for display
         volatility_str = ""
+        if volatility_trigger:
+            asset = volatility_trigger.get('asset', 'Unknown')
+            change = volatility_trigger.get('change', 0.0) * 100
+            volatility_str += f"\nCRITICAL CONTEXT: This rebalance was triggered automatically due to {asset} moving {change:+.2f}% intraday.\n"
+            volatility_str += "IMPORTANT: You MUST explicitly address this volatility event in your explanations. If we are HOLDING a volatile stock, you MUST explicitly explain why we are holding onto it despite the high volatility (e.g., long-term horizon, inflation hedge, conservative DCA strategy).\n"
+            
         if volatility_context:
             volatile_assets = [(sym, pct) for sym, pct in volatility_context.items() if abs(pct) > 0.10]
             if volatile_assets:
-                volatility_str = "Input 4: INTRADAY VOLATILITY EVENTS (stocks with >10% moves today):\n"
+                volatility_str += "\nInput 4: INTRADAY VOLATILITY EVENTS (stocks with >10% moves today):\n"
                 for sym, pct in volatile_assets:
                     volatility_str += f"  - {sym}: {pct*100:+.2f}%\n"
-                volatility_str += "\nIMPORTANT: If a stock experienced high volatility today AND has action='HOLD', you MUST explicitly address this in your HOLDS section. Explain WHY we are holding despite the volatility (e.g., long-term defensive asset, DCA strategy, strategic role).\n"
+                volatility_str += "\nIMPORTANT: If a stock experienced high volatility today AND has action='HOLD', you MUST explicitly address this in your HOLDS section. Explain WHY we are holding despite the volatility.\n"
         
         return f"""
         Role: You are an autonomous financial agent named "Aegis".

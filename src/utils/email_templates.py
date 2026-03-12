@@ -174,8 +174,9 @@ class EmailTemplates:
                     <h2 class='section-title'>Portfolio Watchlist</h2>
                     {portfolio_rows}
                     
-                    <h2 class='section-title'>Action Taken</h2>
-                    <p>Aegis is currently running an automated rebalance sequence directly in response to this alert. A final summary will follow.</p>
+                    <h2 class='section-title'>Instruction</h2>
+                    <p>Run the agent in rebalance mode:<br>
+                    <code>./run_agent.sh interactive rebalance</code></p>
                 </div>
                 <div class='footer'>Aegis - Your Autonomous Investment Agent</div>
             </div>
@@ -357,6 +358,49 @@ class EmailTemplates:
                     <p>Hey {user_name}, here is what Aegis has executed for you:</p>
                     <h2 class='section-title'>Market Context</h2>
                     <div class='reasoning-panel'>
+                        {market_insight_html}
+                    </div>
+                    
+                    {trades_html}
+                    
+                    {news_html}
+                </div>
+                <div class='footer'>Aegis - Your Autonomous Investment Agent</div>
+            </div>
+        </body>
+        </html>
+        """
+        return subject, html.strip()
+
+    @staticmethod
+    def get_volatility_rebalance_content(volatility_trigger, market_context=None, analysis=None, user_name="User"):
+        """Generates HTML content for a Rebalance specifically triggered by high volatility."""
+        date_str = datetime.date.today().isoformat()
+        market_insight_html = EmailTemplates._format_market_insights(market_context)
+        news_html = EmailTemplates._format_news(market_context.get("news_articles", [])) if market_context else ""
+        trades_html = EmailTemplates._format_trades_html(analysis)
+        
+        trigger_asset = volatility_trigger.get('asset', 'Unknown')
+        actual_change = volatility_trigger.get('change', 0.0) * 100
+        
+        subject = f"🚨 Aegis: Volatility Rebalance Executed ({trigger_asset})"
+        
+        html = f"""
+        <html>
+        <head>{EmailTemplates._BASE_CSS}</head>
+        <body>
+            <div class='container'>
+                <div class='header' style='background: #e67e22;'>
+                    <h1>Volatility Response Executed</h1>
+                    <p>Date: {date_str}</p>
+                </div>
+                <div class='content'>
+                    <p>Hey {user_name},</p>
+                    <p>Earlier today, Aegis detected extreme volatility in <strong>{trigger_asset} ({actual_change:+.2f}%)</strong>. In response, an automated portfolio rebalance has been completed to realign your risk exposure to target baselines.</p>
+                    
+                    <h2 class='section-title'>Volatility Context & Strategy</h2>
+                    <div class='reasoning-panel' style='border-left-color: #e67e22;'>
+                        <p><strong>Trigger Event:</strong> {trigger_asset} experienced a major intraday move of {actual_change:+.2f}%.</p>
                         {market_insight_html}
                     </div>
                     

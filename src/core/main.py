@@ -28,6 +28,8 @@ def main():
     parser = setup_parser()
     args = parser.parse_args()
     
+    volatility_trigger = None
+    
     print("--- Investment Agent Initialization ---")
     print(f"Mode: {args.mode.upper()}")
     
@@ -112,6 +114,7 @@ def main():
             print("\n>>> INITIATING AUTOMATIC REBALANCE DUE TO HIGH VOLATILITY <<<")
             args.mode = 'rebalance'
             args.auto = True
+            volatility_trigger = {"asset": movers[0][0], "change": movers[0][1]}
             
             import time
             print("Clearing open orders before rebalance...")
@@ -262,7 +265,7 @@ def main():
                 
                 # We assume Config has GEMINI_API_KEY
                 ai = GeminiClient()
-                analysis = ai.analyze_rebalance(actions, market_data, current_state, mode=args.mode, volatility_context=volatility_context)
+                analysis = ai.analyze_rebalance(actions, market_data, current_state, mode=args.mode, volatility_context=volatility_context, volatility_trigger=volatility_trigger)
                 
                 if analysis:
                     print("\n> ADVISOR REPORT:")
@@ -299,7 +302,11 @@ def main():
                 user_name = current_state.get('user_info', {}).get('name', 'User')
 
                 try:
-                    if args.mode == 'rebalance':
+                    if volatility_trigger:
+                        subject, body = EmailTemplates.get_volatility_rebalance_content(volatility_trigger, market_context, safe_analysis, user_name)
+                        ns.send_email(subject, body)
+                        print("Rich volatility rebalance email notification sent.")
+                    elif args.mode == 'rebalance':
                         subject, body = EmailTemplates.get_rebalance_content(market_context, safe_analysis, user_name)
                         ns.send_email(subject, body)
                         print("Rich rebalance email notification sent.")

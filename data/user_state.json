@@ -87,6 +87,9 @@
     "The Omega Ratio",
     "The Hurst Exponent (H)",
     "The Kelly Criterion",
-    "The Ulcer Index (UI)"
+    "The Ulcer Index (UI)",
+    "The Information Coefficient (IC)",
+    "The Modigliani-Modigliani Measure (M2)",
+    "The Gain-to-Pain Ratio"
   ]
 }

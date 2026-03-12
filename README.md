@@ -33,12 +33,12 @@ Instead of executing blindly at market prices, Aegis computes **10-day forward v
 - **Executive Summaries**: All rebalances and investment reports are generated into executive, highly scannable HTML emails featuring bolded mathematical rationales, tables grouping holds by sector, and detailed news summaries.
 - **Tax-Awareness**: The AI Advisor explains _why_ a trade is happening, warning you if a sale might trigger a tax event but is necessary for risk reduction.
 
-### 🔍 Daily Watchdog
+### 🔍 Daily Watchdog & Volatility Auto-Rebalance (New!)
 
 - **Auto-Monitoring**: Checks your portfolio every morning.
 - **Aegis Masterclass (V3)**: Generates a highly personalized, daily educational curriculum. The agent maintains a persistent topic memory to build a progressive syllabus over time, natively formats math using LaTeX blocks, and curates reading lists.
 - **Dynamic Persona**: Analysis is tailored explicitly to your demographic and risk profile.
-- **Smart Alerts**: Sends an email ONLY if a stock moves >10% intraday, prompting you to rebalance.
+- **Smart Alerts & Autonomous Action**: Sends an email ONLY if a stock moves >10% intraday. It then **automatically pivots into an emergency rebalance** to address the high volatility, generating a specialized 🚨 _Volatility Rebalance Report_ directly to your inbox detailing whether it bought the dip or legally held the asset as insurance.
 
 ### ☁️ GitHub Actions Automation
 
