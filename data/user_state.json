@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-12",
+  "last_run": "2026-03-13",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -90,6 +90,7 @@
     "The Ulcer Index (UI)",
     "The Information Coefficient (IC)",
     "The Modigliani-Modigliani Measure (M2)",
-    "The Gain-to-Pain Ratio"
+    "The Gain-to-Pain Ratio",
+    "The Capture Ratio"
   ]
 }
