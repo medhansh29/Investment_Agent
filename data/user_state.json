@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-17",
+  "last_run": "2026-03-18",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -95,6 +95,7 @@
     "The Sterling Ratio",
     "The Burke Ratio",
     "Roy's Safety-First Ratio",
-    "The Black-Litterman Model"
+    "The Black-Litterman Model",
+    "The Fama-French Three-Factor Model"
   ]
 }
