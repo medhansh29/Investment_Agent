@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-19",
+  "last_run": "2026-03-20",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -97,6 +97,7 @@
     "Roy's Safety-First Ratio",
     "The Black-Litterman Model",
     "The Fama-French Three-Factor Model",
-    "The Carhart Four-Factor Model"
+    "The Carhart Four-Factor Model",
+    "The Pastor-Stambaugh Liquidity Model"
   ]
 }
