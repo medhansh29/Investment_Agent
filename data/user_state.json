@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-22",
+  "last_run": "2026-03-23",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -100,6 +100,7 @@
     "The Carhart Four-Factor Model",
     "The Pastor-Stambaugh Liquidity Model",
     "The Merton Model (Structural Credit Risk)",
-    "The Fundamental Law of Active Management"
+    "The Fundamental Law of Active Management",
+    "Arbitrage Pricing Theory (APT)"
   ]
 }
