@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-28",
+  "last_run": "2026-03-29",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -106,6 +106,7 @@
     "The Altman Z-Score",
     "The Piotroski F-Score",
     "The Beneish M-Score",
-    "The Ohlson Residual Income Valuation Model"
+    "The Ohlson Residual Income Valuation Model",
+    "The Sloan Ratio"
   ]
 }
