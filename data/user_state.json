@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-03-31",
+  "last_run": "2026-04-01",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -109,6 +109,7 @@
     "The Ohlson Residual Income Valuation Model",
     "The Sloan Ratio",
     "Earnings Power Value (EPV)",
-    "The Treynor-Mazuy Model"
+    "The Treynor-Mazuy Model",
+    "The H-Model for Multi-Stage Growth Valuation"
   ]
 }
