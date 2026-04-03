@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-02",
+  "last_run": "2026-04-03",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -111,6 +111,7 @@
     "Earnings Power Value (EPV)",
     "The Treynor-Mazuy Model",
     "The H-Model for Multi-Stage Growth Valuation",
-    "The Heston Model (Stochastic Volatility)"
+    "The Heston Model (Stochastic Volatility)",
+    "The GARCH(1,1) Model"
   ]
 }
