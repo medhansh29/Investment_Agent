@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-06",
+  "last_run": "2026-04-07",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -115,6 +115,7 @@
     "The GARCH(1,1) Model",
     "The Ornstein-Uhlenbeck (OU) Process",
     "The Black-Scholes-Merton Model",
-    "The SABR Volatility Model"
+    "The SABR Volatility Model",
+    "The Nelson-Siegel-Svensson (NSS) Model"
   ]
 }
