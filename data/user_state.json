@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-08",
+  "last_run": "2026-04-09",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -117,6 +117,7 @@
     "The Black-Scholes-Merton Model",
     "The SABR Volatility Model",
     "The Nelson-Siegel-Svensson (NSS) Model",
-    "The Herfindahl-Hirschman Index (HHI) for Portfolio Concentration"
+    "The Herfindahl-Hirschman Index (HHI) for Portfolio Concentration",
+    "The Kyle Model (1985)"
   ]
 }
