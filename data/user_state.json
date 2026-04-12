@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-11",
+  "last_run": "2026-04-12",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -120,6 +120,7 @@
     "The Herfindahl-Hirschman Index (HHI) for Portfolio Concentration",
     "The Kyle Model (1985)",
     "The Glosten-Milgrom Model",
-    "The Kalman Filter (State-Space Estimation)"
+    "The Kalman Filter (State-Space Estimation)",
+    "Volume-Synchronized Probability of Informed Trading (VPIN)"
   ]
 }
