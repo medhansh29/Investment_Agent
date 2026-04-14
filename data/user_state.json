@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-13",
+  "last_run": "2026-04-14",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -122,6 +122,7 @@
     "The Glosten-Milgrom Model",
     "The Kalman Filter (State-Space Estimation)",
     "Volume-Synchronized Probability of Informed Trading (VPIN)",
-    "The Amihud Illiquidity Ratio"
+    "The Amihud Illiquidity Ratio",
+    "The Corrado-Su Option Pricing Model"
   ]
 }
