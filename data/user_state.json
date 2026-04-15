@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-14",
+  "last_run": "2026-04-15",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -123,6 +123,7 @@
     "The Kalman Filter (State-Space Estimation)",
     "Volume-Synchronized Probability of Informed Trading (VPIN)",
     "The Amihud Illiquidity Ratio",
-    "The Corrado-Su Option Pricing Model"
+    "The Corrado-Su Option Pricing Model",
+    "The Roll Model (1984)"
   ]
 }
