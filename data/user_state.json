@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-18",
+  "last_run": "2026-04-19",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -127,6 +127,7 @@
     "The Roll Model (1984)",
     "Michaud Resampled Efficiency",
     "The Treynor-Black Model",
-    "Hierarchical Risk Parity (HRP)"
+    "Hierarchical Risk Parity (HRP)",
+    "The Ledoit-Wolf Shrinkage Estimator"
   ]
 }
