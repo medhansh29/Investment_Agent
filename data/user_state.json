@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-22",
+  "last_run": "2026-04-23",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -131,6 +131,7 @@
     "The Ledoit-Wolf Shrinkage Estimator",
     "The Breeden-Litzenberger Formula",
     "The Bjerksund-Stensland Model",
-    "The Heston-Nandi GARCH Model"
+    "The Heston-Nandi GARCH Model",
+    "The Vasicek Model"
   ]
 }
