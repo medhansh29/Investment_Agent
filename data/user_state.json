@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-24",
+  "last_run": "2026-04-25",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -133,6 +133,7 @@
     "The Bjerksund-Stensland Model",
     "The Heston-Nandi GARCH Model",
     "The Vasicek Model",
-    "The Cox-Ingersoll-Ross (CIR) Model"
+    "The Cox-Ingersoll-Ross (CIR) Model",
+    "The Ho-Lee Model"
   ]
 }
