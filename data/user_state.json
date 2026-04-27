@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-26",
+  "last_run": "2026-04-27",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -135,6 +135,7 @@
     "The Vasicek Model",
     "The Cox-Ingersoll-Ross (CIR) Model",
     "The Ho-Lee Model",
-    "The Hull-White Model"
+    "The Hull-White Model",
+    "The Heath-Jarrow-Morton (HJM) Framework"
   ]
 }
