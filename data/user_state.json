@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-27",
+  "last_run": "2026-04-28",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -136,6 +136,7 @@
     "The Cox-Ingersoll-Ross (CIR) Model",
     "The Ho-Lee Model",
     "The Hull-White Model",
-    "The Heath-Jarrow-Morton (HJM) Framework"
+    "The Heath-Jarrow-Morton (HJM) Framework",
+    "The Longstaff-Schwartz Model (Least Squares Monte Carlo)"
   ]
 }
