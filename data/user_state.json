@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-04-30",
+  "last_run": "2026-05-01",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -139,6 +139,7 @@
     "The Heath-Jarrow-Morton (HJM) Framework",
     "The Longstaff-Schwartz Model (Least Squares Monte Carlo)",
     "The Chen Model (Three-Factor Stochastic Volatility Model)",
-    "The Garman-Klass Volatility Estimator"
+    "The Garman-Klass Volatility Estimator",
+    "The Yang-Zhang Volatility Estimator"
   ]
 }
