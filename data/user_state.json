@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-03",
+  "last_run": "2026-05-04",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -142,6 +142,7 @@
     "The Garman-Klass Volatility Estimator",
     "The Yang-Zhang Volatility Estimator",
     "The Avellaneda-Stoikov Model",
-    "The Square Root Law of Market Impact"
+    "The Square Root Law of Market Impact",
+    "The Madhavan-Richardson-Roomans (MRR) Model"
   ]
 }
