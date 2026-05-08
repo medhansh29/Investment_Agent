@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-07",
+  "last_run": "2026-05-08",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -146,6 +146,7 @@
     "The Madhavan-Richardson-Roomans (MRR) Model",
     "The Almgren-Chriss Optimal Execution Framework",
     "The Fama-French Five-Factor Model",
-    "The Bates Model (Stochastic Volatility with Jumps)"
+    "The Bates Model (Stochastic Volatility with Jumps)",
+    "The Merton Jump-Diffusion Model"
   ]
 }
