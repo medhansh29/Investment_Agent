@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-10",
+  "last_run": "2026-05-11",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -149,6 +149,7 @@
     "The Bates Model (Stochastic Volatility with Jumps)",
     "The Merton Jump-Diffusion Model",
     "The Hansen-Jagannathan Bound",
-    "The Akaike Information Criterion (AIC)"
+    "The Akaike Information Criterion (AIC)",
+    "The Augmented Dickey-Fuller (ADF) Test"
   ]
 }
