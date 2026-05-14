@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-13",
+  "last_run": "2026-05-14",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -152,6 +152,7 @@
     "The Akaike Information Criterion (AIC)",
     "The Augmented Dickey-Fuller (ADF) Test",
     "The Phillips-Perron (PP) Test",
-    "The Engle-Granger Cointegration Test"
+    "The Engle-Granger Cointegration Test",
+    "The Hidden Markov Model (HMM) for Regime Detection"
   ]
 }
