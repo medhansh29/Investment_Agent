@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-15",
+  "last_run": "2026-05-16",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -154,6 +154,7 @@
     "The Phillips-Perron (PP) Test",
     "The Engle-Granger Cointegration Test",
     "The Hidden Markov Model (HMM) for Regime Detection",
-    "Shannon Entropy in Portfolio Diversification"
+    "Shannon Entropy in Portfolio Diversification",
+    "Epstein-Zin Recursive Utility"
   ]
 }
