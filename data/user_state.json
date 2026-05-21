@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-20",
+  "last_run": "2026-05-21",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -159,6 +159,7 @@
     "The Ross Recovery Theorem",
     "The Karush-Kuhn-Tucker (KKT) Conditions",
     "The Christoffersen Conditional Coverage Test",
-    "The Diebold-Mariano (DM) Test for Predictive Accuracy Comparison"
+    "The Diebold-Mariano (DM) Test for Predictive Accuracy Comparison",
+    "The Fama-MacBeth Two-Step Regression"
   ]
 }
