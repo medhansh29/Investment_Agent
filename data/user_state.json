@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-22",
+  "last_run": "2026-05-23",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -161,6 +161,7 @@
     "The Christoffersen Conditional Coverage Test",
     "The Diebold-Mariano (DM) Test for Predictive Accuracy Comparison",
     "The Fama-MacBeth Two-Step Regression",
-    "The Lee-Ready Algorithm"
+    "The Lee-Ready Algorithm",
+    "The Johansen Cointegration Test"
   ]
 }
