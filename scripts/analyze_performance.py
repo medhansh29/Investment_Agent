@@ -87,10 +87,11 @@ def fetch_spy_data(client, start_date_str: str, end_date_str: str) -> pd.DataFra
         # We need a lookback period to cover start_date to end_date
         d1 = datetime.strptime(start_date_str, "%Y-%m-%d")
         d2 = datetime.strptime(end_date_str, "%Y-%m-%d")
-        days = (d2 - d1).days
-        lookback_years = max(0.1, round(days / 365.0, 2))
+        # To cover start_date up to end_date, the lookback from TODAY must reach start_date
+        days_from_today = (datetime.now() - d1).days
+        lookback_years = max(0.1, round(days_from_today / 365.0, 2))
         
-        bars = client.get_market_data(["SPY"], lookback_years=lookback_years + 0.1)
+        bars = client.get_market_data(["SPY"], lookback_years=lookback_years + 0.05)
         if bars.empty:
             return pd.DataFrame()
             
@@ -113,34 +114,53 @@ def fetch_spy_data(client, start_date_str: str, end_date_str: str) -> pd.DataFra
         return pd.DataFrame()
 
 def generate_chart(equity_df: pd.DataFrame, spy_df: pd.DataFrame, output_path: str):
-    """Generates and saves performance chart comparing portfolio equity and SPY."""
+    """Generates and saves performance chart comparing portfolio equity and SPY, with a drawdown subplot."""
+    if equity_df.empty:
+        return
+    
+    # Filter for non-zero equity
+    equity_df = equity_df[equity_df["Equity"] > 0].copy()
     if equity_df.empty:
         return
         
-    plt.figure(figsize=(10, 5))
-    
-    # Normalize portfolio equity to % return starting from 0%
-    initial_equity = equity_df["Equity"].iloc[0]
-    portfolio_pct = (equity_df["Equity"] - initial_equity) / initial_equity * 100
     dates = pd.to_datetime(equity_df["Date"])
+    equity_vals = equity_df["Equity"].values
     
-    plt.plot(dates, portfolio_pct, label="Portfolio Return (%)", color="#27ae60", linewidth=2.5)
+    # Calculate returns
+    initial_equity = equity_vals[0]
+    portfolio_pct = (equity_vals - initial_equity) / initial_equity * 100
     
-    # If benchmark data is available, normalize and plot it
+    # Calculate drawdowns
+    peaks = np.maximum.accumulate(equity_vals)
+    drawdowns = (peaks - equity_vals) / peaks * 100
+    
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 7), sharex=True, gridspec_kw={'height_ratios': [2, 1]})
+    
+    # Subplot 1: Returns
+    ax1.plot(dates, portfolio_pct, label="Portfolio Return (%)", color="#27ae60", linewidth=2.5)
+    
     if not spy_df.empty:
         # Align SPY dates with portfolio dates
-        spy_df = spy_df[spy_df["Date"].isin(equity_df["Date"])].copy()
-        if not spy_df.empty:
-            initial_spy = spy_df["close"].iloc[0]
-            spy_pct = (spy_df["close"] - initial_spy) / initial_spy * 100
-            spy_dates = pd.to_datetime(spy_df["Date"])
-            plt.plot(spy_dates, spy_pct, label="S&P 500 (SPY) (%)", color="#7f8c8d", linestyle="--", linewidth=1.5)
+        spy_aligned = spy_df[spy_df["Date"].isin(equity_df["Date"])].copy()
+        if not spy_aligned.empty:
+            initial_spy = spy_aligned["close"].iloc[0]
+            spy_pct = (spy_aligned["close"] - initial_spy) / initial_spy * 100
+            spy_dates = pd.to_datetime(spy_aligned["Date"])
+            ax1.plot(spy_dates, spy_pct, label="S&P 500 (SPY) (%)", color="#7f8c8d", linestyle="--", linewidth=1.5)
             
-    plt.title("Portfolio Cumulative Performance vs S&P 500", fontsize=14, fontweight="bold", pad=15)
-    plt.xlabel("Date", fontsize=11)
-    plt.ylabel("Return (%)", fontsize=11)
-    plt.grid(True, linestyle=":", alpha=0.6)
-    plt.legend(loc="upper left")
+    ax1.set_title("Portfolio Cumulative Performance vs S&P 500", fontsize=12, fontweight="bold", pad=10)
+    ax1.set_ylabel("Return (%)", fontsize=10)
+    ax1.grid(True, linestyle=":", alpha=0.6)
+    ax1.legend(loc="upper left")
+    
+    # Subplot 2: Drawdown
+    ax2.fill_between(dates, -drawdowns, 0, label="Drawdown (%)", color="#e74c3c", alpha=0.3)
+    ax2.plot(dates, -drawdowns, color="#e74c3c", linewidth=1.0)
+    ax2.set_title("Portfolio Drawdown (%)", fontsize=10, fontweight="bold", pad=5)
+    ax2.set_xlabel("Date", fontsize=10)
+    ax2.set_ylabel("Drawdown (%)", fontsize=10)
+    ax2.grid(True, linestyle=":", alpha=0.6)
+    
     plt.tight_layout()
     
     # Save chart
@@ -148,6 +168,76 @@ def generate_chart(equity_df: pd.DataFrame, spy_df: pd.DataFrame, output_path: s
     plt.savefig(output_path, dpi=300)
     print(f"Saved performance chart to {output_path}")
     plt.close()
+
+def generate_trade_analysis_chart(results: dict, output_path: str):
+    """Generates and saves trade performance and contribution charts."""
+    trades = results.get("completed_trades", [])
+    if not trades:
+        print("No completed trades to plot for trade analysis.")
+        return
+        
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+    
+    # 1. Individual Trade Returns (%)
+    trade_indices = list(range(1, len(trades) + 1))
+    trade_pcts = [t["pnl_pct"] * 100 for t in trades]
+    trade_symbols = [t["symbol"] for t in trades]
+    
+    colors = ["#27ae60" if r > 0 else "#e74c3c" for r in trade_pcts]
+    
+    bars1 = ax1.bar(trade_indices, trade_pcts, color=colors, edgecolor="black", alpha=0.8)
+    ax1.axhline(0, color="black", linewidth=1.0, linestyle="-")
+    ax1.set_title("Individual Closed Trade Returns (%)", fontsize=12, fontweight="bold", pad=10)
+    ax1.set_ylabel("Return (%)", fontsize=10)
+    ax1.set_xlabel("Trade #", fontsize=10)
+    ax1.set_xticks(trade_indices)
+    
+    # Add symbol label above/below the bar
+    for idx, bar in enumerate(bars1):
+        yval = bar.get_height()
+        va = 'bottom' if yval >= 0 else 'top'
+        offset = 0.5 if yval >= 0 else -0.5
+        ax1.text(bar.get_x() + bar.get_width()/2.0, yval + offset, trade_symbols[idx], 
+                 ha='center', va=va, fontsize=8, fontweight="bold")
+                 
+    ax1.grid(True, linestyle=":", alpha=0.6)
+    
+    # 2. PnL Contribution by Symbol ($)
+    ticker_pnl = {}
+    for t in trades:
+        sym = t["symbol"]
+        ticker_pnl[sym] = ticker_pnl.get(sym, 0.0) + t["pnl"]
+        
+    sorted_pnl = sorted(ticker_pnl.items(), key=lambda x: x[1])
+    symbols = [item[0] for item in sorted_pnl]
+    pnls = [item[1] for item in sorted_pnl]
+    
+    bar_colors = ["#27ae60" if p > 0 else "#e74c3c" for p in pnls]
+    
+    bars2 = ax2.barh(symbols, pnls, color=bar_colors, edgecolor="black", alpha=0.8)
+    ax2.axvline(0, color="black", linewidth=1.0)
+    ax2.set_title("Realized PnL Contribution by Symbol ($)", fontsize=12, fontweight="bold", pad=10)
+    ax2.set_xlabel("PnL ($)", fontsize=10)
+    ax2.set_ylabel("Ticker", fontsize=10)
+    
+    # Add values next to the bars
+    for bar in bars2:
+        xval = bar.get_width()
+        ha = 'left' if xval >= 0 else 'right'
+        offset = 2 if xval >= 0 else -2
+        ax2.text(xval + offset, bar.get_y() + bar.get_height()/2.0, f"${xval:+.2f}", 
+                 ha=ha, va='center', fontsize=8, fontweight="bold")
+                 
+    ax2.grid(True, linestyle=":", alpha=0.6)
+    
+    plt.tight_layout()
+    
+    # Save chart
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path, dpi=300)
+    print(f"Saved trade analysis chart to {output_path}")
+    plt.close()
+
 
 def write_markdown_report(results: dict, output_path: str):
     """Writes a detailed markdown report of the analysis."""
@@ -291,15 +381,24 @@ def main():
     report_path = os.path.join(args.output_dir, "performance_report.md")
     write_markdown_report(results, report_path)
     
+    # Clean equity_df to only include non-zero equity days for plotting and benchmark fetch
+    clean_equity_df = pd.DataFrame()
+    if not equity_df.empty:
+        clean_equity_df = equity_df[equity_df["Equity"] > 0].copy()
+        
     # Try benchmark plotting
     spy_df = pd.DataFrame()
-    if client and not equity_df.empty:
-        start_date = equity_df["Date"].iloc[0]
-        end_date = equity_df["Date"].iloc[-1]
+    if client and not clean_equity_df.empty:
+        start_date = clean_equity_df["Date"].iloc[0]
+        end_date = clean_equity_df["Date"].iloc[-1]
         spy_df = fetch_spy_data(client, start_date, end_date)
         
     chart_path = os.path.join(args.output_dir, "performance_chart.png")
-    generate_chart(equity_df, spy_df, chart_path)
+    generate_chart(clean_equity_df, spy_df, chart_path)
+    
+    trade_chart_path = os.path.join(args.output_dir, "trade_analysis_chart.png")
+    generate_trade_analysis_chart(results, trade_chart_path)
+
 
 if __name__ == "__main__":
     main()

@@ -47,7 +47,7 @@ Developers and users can monitor the agent's performance in terms of raw trade o
 - **FIFO Trade Matching**: Pairs down historical `FILL` activities into individual closed trades to compute exact Win Rates and Profit Factors.
 - **Money-Weighted Returns (IRR)**: Computes annualized Internal Rate of Return (IRR) to correctly evaluate performance while adjusting for deposits/withdrawals.
 - **Risk Metrics**: Calculates Annualized Sharpe Ratio, Annualized Sortino Ratio, Daily Volatility, and Maximum Drawdown.
-- **Reporting & Visualization**: Generates terminal dashboards, Markdown reports (`data/performance_report.md`), and matplotlib equity curve comparison charts against the S&P 500 (`data/performance_chart.png`).
+- **Reporting & Visualization**: Generates terminal dashboards, Markdown reports (`data/performance_report.md`), and matplotlib equity curve comparison charts with drawdowns (`data/performance_chart.png`) along with individual trade returns and symbol PnL contributions (`data/trade_analysis_chart.png`).
 
 ### ☁️ GitHub Actions Automation
 
@@ -185,7 +185,8 @@ The project follows a modular **Source Layout**:
 - **`data/`**: Storage
   - **`user_state.json`**: Portfolio history and settings.
   - **`performance_report.md`**: Generated report (git ignored).
-  - **`performance_chart.png`**: Generated equity curve chart (git ignored).
+  - **`performance_chart.png`**: Generated equity curve and drawdown chart (git ignored).
+  - **`trade_analysis_chart.png`**: Generated closed trade distribution and realized PnL contribution chart (git ignored).
 
 ---
 
