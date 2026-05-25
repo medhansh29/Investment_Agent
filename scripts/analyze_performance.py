@@ -30,6 +30,7 @@ def parse_args():
     parser.add_argument("--equity-csv", type=str, default="alpaca_daily_equity.csv", help="Path to daily equity CSV")
     parser.add_argument("--rf-rate", type=float, default=0.04, help="Annual risk-free rate (default 0.04 / 4%%)")
     parser.add_argument("--output-dir", type=str, default="data", help="Directory to save reports and charts")
+    parser.add_argument("--rebaseline", action="store_true", help="Re-baseline performance and charts to the date of the first trade execution (inception date)")
     return parser.parse_args()
 
 def fetch_data_from_api(rf_rate: float):
@@ -369,6 +370,39 @@ def main():
     else:
         # Fetch from API
         activities_df, equity_df, client = fetch_data_from_api(args.rf_rate)
+        
+    # Re-baseline to true inception date if requested
+    if args.rebaseline and not activities_df.empty:
+        fill_types = ["fill", "partial_fill"]
+        type_col = next((c for c in activities_df.columns if c.lower() == "type"), "type")
+        act_type_col = next((c for c in activities_df.columns if c.lower() == "activity_type"), "activity_type")
+        time_col = next((c for c in activities_df.columns if c.lower() in ["transaction_time", "transactiontime", "time"]), None)
+        
+        if time_col:
+            # Find the first fill activity
+            temp_fills = activities_df[
+                (activities_df[act_type_col].astype(str).str.upper() == "FILL") |
+                (activities_df[type_col].astype(str).str.lower().isin(fill_types))
+            ].copy()
+            
+            if not temp_fills.empty:
+                temp_fills["parsed_time"] = pd.to_datetime(temp_fills[time_col])
+                first_fill_date = temp_fills["parsed_time"].min().strftime("%Y-%m-%d")
+                print(f"Re-baselining data to true inception date: {first_fill_date}")
+                
+                # Filter activities
+                activities_df = activities_df.copy()
+                activities_df["parsed_time"] = pd.to_datetime(activities_df[time_col])
+                activities_df = activities_df[activities_df["parsed_time"].dt.strftime("%Y-%m-%d") >= first_fill_date].copy()
+                activities_df = activities_df.drop(columns=["parsed_time"], errors="ignore")
+                
+                # Filter equity
+                if not equity_df.empty:
+                    equity_df = equity_df[pd.to_datetime(equity_df["Date"]).dt.strftime("%Y-%m-%d") >= first_fill_date].copy()
+            else:
+                print("No fill activities found. Skipping re-baselining.")
+        else:
+            print("No transaction time column found. Skipping re-baselining.")
         
     # Run analyzer
     analyzer = PerformanceAnalyzer(activities_df, equity_df)
