@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-24",
+  "last_run": "2026-05-25",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -163,6 +163,7 @@
     "The Fama-MacBeth Two-Step Regression",
     "The Lee-Ready Algorithm",
     "The Johansen Cointegration Test",
-    "The Carr-Madan Method (FFT Option Pricing)"
+    "The Carr-Madan Method (FFT Option Pricing)",
+    "The Variance Gamma (VG) Model"
   ]
 }
