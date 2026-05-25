@@ -149,3 +149,32 @@ class AlpacaClient:
                 # Fallback check: if we are in Mock mode (which is implicit if API fails), we might just print
                 if "SSL" in str(e) or "Mock" in str(e):
                      print(f"  -> (Mock Mode) Trade 'executed' locally.")
+
+    def get_portfolio_history(self, period="1A", timeframe="1D", date_start=None, date_end=None):
+        """
+        Fetches historical portfolio values.
+        """
+        try:
+            return self.api.get_portfolio_history(
+                period=period,
+                timeframe=timeframe,
+                date_start=date_start,
+                date_end=date_end
+            )
+        except Exception as e:
+            print(f"Error fetching portfolio history: {e}")
+            return None
+
+    def get_account_activities(self, activity_types="FILL,FEE,TRANS", after=None, until=None):
+        """
+        Fetches account activities (trades, fees, transfers).
+        """
+        try:
+            return self.api.get_activities(
+                activity_types=activity_types,
+                after=after,
+                until=until
+            )
+        except Exception as e:
+            print(f"Error fetching account activities: {e}")
+            return []

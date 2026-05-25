@@ -33,3 +33,7 @@ wheels/
 # Internal Testing
 fetch_alpaca_activities.py
 alpaca_daily_equity.csv
+alpaca_activities.csv
+data/performance_report.md
+data/performance_chart.png
+*.pdf

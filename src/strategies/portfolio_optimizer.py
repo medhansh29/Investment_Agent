@@ -107,6 +107,16 @@ class PortfolioOptimizer:
              if ticker in tickers_list:
                 idx = tickers_list.index(ticker)
                 ef.add_constraint(lambda w, i=idx: w[i] >= 0.05)
+
+        # Force Weight Floor: AI-generated corrective constraints (from pending rebalance suggestions)
+        # Format: {"LMT": 0.05, "RTX": 0.03} -> weight_floor for each ticker
+        for ticker, floor_pct in constraints.get('force_weight_floor', {}).items():
+            if ticker in tickers_list:
+                idx = tickers_list.index(ticker)
+                # Ensure floor is a float and within valid range
+                floor = float(max(0.0, min(floor_pct, 0.20)))
+                ef.add_constraint(lambda w, i=idx, f=floor: w[i] >= f)
+                print(f"  [Corrective] {ticker}: Applying AI-suggested min weight floor of {floor:.1%}")
         
         try:
             # STRATEGY SELECTION (4 Profiles)

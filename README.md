@@ -40,6 +40,15 @@ Instead of executing blindly at market prices, Aegis computes **10-day forward v
 - **Dynamic Persona**: Analysis is tailored explicitly to your demographic and risk profile.
 - **Smart Alerts & Autonomous Action**: Sends an email ONLY if a stock moves >10% intraday. It then **automatically pivots into an emergency rebalance** to address the high volatility, generating a specialized 🚨 _Volatility Rebalance Report_ directly to your inbox detailing whether it bought the dip or legally held the asset as insurance.
 
+### 📈 Portfolio Performance Analyzer (New!)
+
+Developers and users can monitor the agent's performance in terms of raw trade outputs and portfolio metrics:
+
+- **FIFO Trade Matching**: Pairs down historical `FILL` activities into individual closed trades to compute exact Win Rates and Profit Factors.
+- **Money-Weighted Returns (IRR)**: Computes annualized Internal Rate of Return (IRR) to correctly evaluate performance while adjusting for deposits/withdrawals.
+- **Risk Metrics**: Calculates Annualized Sharpe Ratio, Annualized Sortino Ratio, Daily Volatility, and Maximum Drawdown.
+- **Reporting & Visualization**: Generates terminal dashboards, Markdown reports (`data/performance_report.md`), and matplotlib equity curve comparison charts against the S&P 500 (`data/performance_chart.png`).
+
 ### ☁️ GitHub Actions Automation
 
 The agent runs autonomously in the cloud via GitHub Actions schedulers:
@@ -145,6 +154,19 @@ Simulate the automated alerts (sends actionable notifications/emails):
 ./scripts/run_agent.sh daily       # Runs Daily Watchdog Check
 ```
 
+### Portfolio Performance Analysis
+
+To evaluate the agent's performance and output reports:
+
+```bash
+# Run analysis on live Alpaca Paper/Live account
+python3 scripts/analyze_performance.py
+
+# Run analysis offline using local CSV cached data
+python3 scripts/analyze_performance.py --use-csv
+```
+
+
 ---
 
 ## 📂 File Structure
@@ -155,12 +177,15 @@ The project follows a modular **Source Layout**:
   - **`core/`**: The Brain (`main.py`, `config.py`, `state_manager.py`)
   - **`strategies/`**: The Math (`portfolio_optimizer.py`)
   - **`integrations/`**: The Connections (`alpaca_client.py`, `gemini_client.py`)
-  - **`utils/`**: Helpers (`notifications`, `templates`)
+  - **`utils/`**: Helpers (`notifications`, `templates`, `performance_analyzer.py`)
 - **`scripts/`**: Automation Scripts
   - **`run_agent.sh`**: Main entry point helper.
+  - **`analyze_performance.py`**: Performance analysis and reporting script.
   - **`install_cron.sh`**: Setup script for automation.
 - **`data/`**: Storage
   - **`user_state.json`**: Portfolio history and settings.
+  - **`performance_report.md`**: Generated report (git ignored).
+  - **`performance_chart.png`**: Generated equity curve chart (git ignored).
 
 ---
 
