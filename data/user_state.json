@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-05-25",
+  "last_run": "2026-05-26",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -164,6 +164,94 @@
     "The Lee-Ready Algorithm",
     "The Johansen Cointegration Test",
     "The Carr-Madan Method (FFT Option Pricing)",
-    "The Variance Gamma (VG) Model"
+    "The Variance Gamma (VG) Model",
+    "The Kullback-Leibler (KL) Divergence"
+  ],
+  "pending_rebalance_suggestions": [
+    {
+      "human_reason": "Reduce concentration risk from the unexplained JNJ underperformance by increasing allocation to LLY, which has positive fundamental catalysts per research.",
+      "constraints": {
+        "force_include": [
+          "LLY"
+        ],
+        "force_weight_floor": {
+          "LLY": 0.02
+        }
+      },
+      "date": "2026-05-26"
+    },
+    {
+      "human_reason": "Capitalize on strategic importance and fundamental strength during a temporary consolidation period, as confirmed by rising geopolitical tensions.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-05-26"
+    },
+    {
+      "human_reason": "Investigate significant underperformance of XOM/CVX relative to the XLE benchmark despite positive geopolitical catalysts. The cause is unknown.",
+      "constraints": {},
+      "date": "2026-05-26"
+    },
+    {
+      "human_reason": "Increase exposure to market leader NVDA, as current underperformance is attributed to temporary macro headwinds, not a weakening of its dominant market position.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.01
+        }
+      },
+      "date": "2026-05-26"
+    },
+    {
+      "human_reason": "Global strategy pivot: Reduce exposure to the concentrated, unexplained risk in JNJ. Reallocate capital to fundamentally strong Defense (LMT) and AI (NVDA) leaders whose current underperformance is explained and appears temporary.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "NVDA": 0.01
+        }
+      },
+      "date": "2026-05-26"
+    }
+  ],
+  "portfolio_snapshots": [
+    {
+      "date": "2026-05-26",
+      "portfolio_value": 106372.66,
+      "positions_pct": {
+        "ABBV": 0.0081,
+        "AMZN": 0.0051,
+        "COST": 0.0581,
+        "CRM": 0.0102,
+        "CSCO": 0.0137,
+        "CVX": 0.0266,
+        "DIS": 0.0049,
+        "DUK": 0.0508,
+        "GOOGL": 0.0472,
+        "IBM": 0.0073,
+        "JNJ": 0.1447,
+        "KO": 0.1846,
+        "LLY": 0.0101,
+        "LMT": 0.0953,
+        "MCD": 0.0478,
+        "MSFT": 0.1262,
+        "NVDA": 0.0061,
+        "ORCL": 0.0018,
+        "PG": 0.0816,
+        "UBER": 0.0041,
+        "UNH": 0.0329,
+        "XOM": 0.0603
+      }
+    }
   ]
 }
