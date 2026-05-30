@@ -405,6 +405,7 @@ def main():
             market_context = market_int.get_market_context()
 
             # --- Load Pending Rebalance Suggestions from Memory ---
+            constraints = {}
             pending_suggestions = state_manager.get_pending_rebalance_suggestions()
             if pending_suggestions:
                 print(f"\n  [Memory] {len(pending_suggestions)} pending corrective suggestion(s) found:")
