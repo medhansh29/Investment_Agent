@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-01",
+  "last_run": "2026-06-02",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -171,9 +171,74 @@
     "The Put/Call Ratio",
     "Markowitz Mean-Variance Optimization",
     "The CBOE Volatility Index (VIX)",
-    "Time-Weighted Average Price (TWAP)"
+    "Time-Weighted Average Price (TWAP)",
+    "The T-Statistic: Gauging Statistical Significance"
   ],
-  "pending_rebalance_suggestions": [],
+  "pending_rebalance_suggestions": [
+    {
+      "human_reason": "Severe, unexplained underperformance relative to the benchmark constitutes a critical risk. The holdings may be lagging the broader tech market's leaders. A position review is required.",
+      "constraints": {
+        "force_exclude": [
+          "IBM",
+          "ORCL"
+        ]
+      },
+      "date": "2026-06-02"
+    },
+    {
+      "human_reason": "Concentrate capital in LMT to reflect its strong fundamental drivers (PrSM production quadrupling) and the persistent geopolitical risks highlighted in macro news. The current dip represents a strategic entry point.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-02"
+    },
+    {
+      "human_reason": "The portfolio's weight in NVDA (0.64%) is critically misaligned with its stated market dominance and '$1T revenue opportunity'. The recent dip should be used to build a core position.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-02"
+    },
+    {
+      "human_reason": "Flagging Unexplained Risk. A >4.5% unexplained positive divergence in a defensive utility stock is abnormal and represents unquantified event risk. Recommend investigating the cause and potentially trimming the position to lock in gains.",
+      "constraints": {},
+      "date": "2026-06-02"
+    },
+    {
+      "human_reason": "The extreme overweight (49.7%) in this underperforming defensive sector is causing significant beta-slippage against the market. The allocation must be reduced to fund growth-oriented pivots.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.1,
+          "JNJ": 0.1
+        }
+      },
+      "date": "2026-06-02"
+    },
+    {
+      "human_reason": "The portfolio is misaligned with key market drivers. RAG analysis indicates strong, durable trends in Defense (LMT) and AI (NVDA) that the portfolio is underexposed to. Concurrently, a severe, unexplained risk has emerged in Legacy Tech. The strategy must pivot from lagging defensive names toward these identified growth and geopolitical themes.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-02"
+    }
+  ],
   "portfolio_snapshots": [
     {
       "date": "2026-05-26",
@@ -364,6 +429,33 @@
         "UBER": 0.004,
         "UNH": 0.032,
         "XOM": 0.0575
+      }
+    },
+    {
+      "date": "2026-06-02",
+      "portfolio_value": 105131.64,
+      "positions_pct": {
+        "ABBV": 0.0082,
+        "AMZN": 0.0049,
+        "COST": 0.0541,
+        "CRM": 0.0118,
+        "CSCO": 0.0139,
+        "CVX": 0.0301,
+        "DIS": 0.0049,
+        "DUK": 0.0514,
+        "GOOGL": 0.0457,
+        "IBM": 0.0088,
+        "JNJ": 0.1434,
+        "KO": 0.1807,
+        "LMT": 0.0936,
+        "MCD": 0.047,
+        "MSFT": 0.1286,
+        "NVDA": 0.0064,
+        "ORCL": 0.0023,
+        "PG": 0.0721,
+        "UBER": 0.0042,
+        "UNH": 0.0324,
+        "XOM": 0.0597
       }
     }
   ]
