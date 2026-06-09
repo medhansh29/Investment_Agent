@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-08",
+  "last_run": "2026-06-09",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -178,7 +178,8 @@
     "The Wyckoff Method",
     "The Relative Strength Index (RSI)",
     "The Moving Average Convergence Divergence (MACD) Indicator",
-    "The Accumulation/Distribution Line (A/D Line)"
+    "The Accumulation/Distribution Line (A/D Line)",
+    "Bollinger Bands\u00ae"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -680,6 +681,82 @@
         ]
       },
       "date": "2026-06-08"
+    },
+    {
+      "human_reason": "The extreme overweight (combined 33% in KO and JNJ alone) in this underperforming defensive sector is causing significant beta-slippage. The allocation must be reduced to fund growth-oriented pivots.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.1,
+          "JNJ": 0.1
+        }
+      },
+      "date": "2026-06-09"
+    },
+    {
+      "human_reason": "The portfolio's weight in NVDA is critically misaligned with its stated market dominance and '$1T revenue opportunity'. The recent dip, driven by macro headwinds, should be used to build a core position.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-09"
+    },
+    {
+      "human_reason": "Severe, chronic underperformance relative to the tech benchmark constitutes a critical risk. The holdings in IBM and ORCL are lagging the broader tech market's leaders and must be excluded.",
+      "constraints": {
+        "force_exclude": [
+          "IBM",
+          "ORCL"
+        ]
+      },
+      "date": "2026-06-09"
+    },
+    {
+      "human_reason": "Concentrate capital in LMT to reflect its strong fundamental drivers (PrSM production) and the persistent geopolitical risks highlighted in macro news. The current consolidation represents a strategic entry point.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-09"
+    },
+    {
+      "human_reason": "Flagging Unexplained Risk. A previously identified significant positive divergence in this defensive utility stock is abnormal. Recommend trimming the position to lock in gains and reduce exposure to this uncertainty.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "DUK": 0.04
+        }
+      },
+      "date": "2026-06-09"
+    },
+    {
+      "human_reason": "The portfolio is critically misaligned with key market drivers. RAG analysis indicates strong, durable trends in Defense (LMT) and AI (NVDA) that the portfolio is underexposed to. The strategy must pivot from lagging, overweight defensive names (KO, JNJ) and underperforming legacy tech (IBM, ORCL) toward these identified growth and geopolitical themes, while managing unexplained risk in DUK.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "NVDA": 0.05
+        },
+        "force_weight_ceiling": {
+          "KO": 0.1,
+          "JNJ": 0.1,
+          "DUK": 0.04
+        },
+        "force_exclude": [
+          "IBM",
+          "ORCL"
+        ]
+      },
+      "date": "2026-06-09"
     }
   ],
   "portfolio_snapshots": [
@@ -1061,6 +1138,33 @@
         "UBER": 0.004,
         "UNH": 0.034,
         "XOM": 0.0608
+      }
+    },
+    {
+      "date": "2026-06-09",
+      "portfolio_value": 104932.5,
+      "positions_pct": {
+        "ABBV": 0.0085,
+        "AMZN": 0.0047,
+        "COST": 0.0557,
+        "CRM": 0.0104,
+        "CSCO": 0.0142,
+        "CVX": 0.0306,
+        "DIS": 0.0047,
+        "DUK": 0.05,
+        "GOOGL": 0.0451,
+        "IBM": 0.008,
+        "JNJ": 0.1482,
+        "KO": 0.1821,
+        "LMT": 0.0942,
+        "MCD": 0.0476,
+        "MSFT": 0.1179,
+        "NVDA": 0.006,
+        "ORCL": 0.002,
+        "PG": 0.0747,
+        "UBER": 0.004,
+        "UNH": 0.0348,
+        "XOM": 0.0606
       }
     }
   ]
