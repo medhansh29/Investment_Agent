@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-11",
+  "last_run": "2026-06-12",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -180,9 +180,61 @@
     "The Moving Average Convergence Divergence (MACD) Indicator",
     "The Accumulation/Distribution Line (A/D Line)",
     "Bollinger Bands\u00ae",
-    "The Graham Number: A Value Investing Benchmark"
+    "The Graham Number: A Value Investing Benchmark",
+    "The Stochastic RSI (StochRSI)"
   ],
-  "pending_rebalance_suggestions": [],
+  "pending_rebalance_suggestions": [
+    {
+      "human_reason": "The portfolio's tech exposure is too defensive. To better track the sector's growth, increase allocation to high-momentum names like NVDA, which is central to the AI theme, despite recent volatility.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.025
+        }
+      },
+      "date": "2026-06-12"
+    },
+    {
+      "human_reason": "Acknowledge the short-term geopolitical headwinds while maintaining conviction in the long-term fundamental driver (a $194B backlog). Set a weight floor to prevent panic selling on headline news.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.09
+        }
+      },
+      "date": "2026-06-12"
+    },
+    {
+      "human_reason": "The oversized JNJ position creates a drag on sector performance. Rebalance to increase weight in other high-quality holdings like UNH to create a more balanced exposure that can better track the XLV benchmark.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.04
+        }
+      },
+      "date": "2026-06-12"
+    },
+    {
+      "human_reason": "Macro indicators show a 'flight to quality' environment: banks are de-risking and corporations with pricing power are outperforming. The portfolio should pivot to reinforce its highest-quality holdings with proven balance sheets and margin control, particularly within the underperforming tech sector.",
+      "constraints": {
+        "force_include": [
+          "MSFT",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "MSFT": 0.12,
+          "PG": 0.08
+        }
+      },
+      "date": "2026-06-12"
+    }
+  ],
   "portfolio_snapshots": [
     {
       "date": "2026-05-26",
@@ -616,6 +668,33 @@
         "UBER": 0.004,
         "UNH": 0.035,
         "XOM": 0.0594
+      }
+    },
+    {
+      "date": "2026-06-12",
+      "portfolio_value": 105943.46,
+      "positions_pct": {
+        "ABBV": 0.0085,
+        "AMZN": 0.0046,
+        "COST": 0.0553,
+        "CRM": 0.0095,
+        "CSCO": 0.0138,
+        "CVX": 0.0299,
+        "DIS": 0.0047,
+        "DUK": 0.0503,
+        "GOOGL": 0.0444,
+        "IBM": 0.0079,
+        "JNJ": 0.1507,
+        "KO": 0.1876,
+        "LMT": 0.098,
+        "MCD": 0.0484,
+        "MSFT": 0.1112,
+        "NVDA": 0.0058,
+        "ORCL": 0.0017,
+        "PG": 0.0756,
+        "UBER": 0.0039,
+        "UNH": 0.0343,
+        "XOM": 0.0581
       }
     }
   ]
