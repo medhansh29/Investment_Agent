@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-12",
+  "last_run": "2026-06-13",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -181,7 +181,8 @@
     "The Accumulation/Distribution Line (A/D Line)",
     "Bollinger Bands\u00ae",
     "The Graham Number: A Value Investing Benchmark",
-    "The Stochastic RSI (StochRSI)"
+    "The Stochastic RSI (StochRSI)",
+    "The Ichimoku Cloud (Ichimoku Kinko Hyo)"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -233,6 +234,74 @@
         }
       },
       "date": "2026-06-12"
+    },
+    {
+      "human_reason": "FIX QUEUED: Increase allocation to NVDA to capture core AI-driven market momentum and correct severe under-exposure.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.025
+        }
+      },
+      "date": "2026-06-13"
+    },
+    {
+      "human_reason": "FIX QUEUED: Maintain a core position in LMT based on its strong $194B backlog, but set a weight floor to prevent further over-concentration on a fading geopolitical narrative.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.09
+        }
+      },
+      "date": "2026-06-13"
+    },
+    {
+      "human_reason": "Reduce exposure to the energy sector as Mideast de-escalation news reduces the probability of a near-term energy price shock.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "XOM": 0.04,
+          "CVX": 0.02
+        }
+      },
+      "date": "2026-06-13"
+    },
+    {
+      "human_reason": "FIX QUEUED: Rebalance internally by increasing the weight of other high-quality holdings like UNH to reduce single-stock concentration risk and better track the diversified XLV benchmark.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.04
+        }
+      },
+      "date": "2026-06-13"
+    },
+    {
+      "human_reason": "FIX QUEUED: Reinforce the 'quality' aspect of the tech allocation by increasing MSFT's weight, creating a strong anchor while other changes add exposure to higher-growth segments.",
+      "constraints": {
+        "force_include": [
+          "MSFT"
+        ],
+        "force_weight_floor": {
+          "MSFT": 0.12
+        }
+      },
+      "date": "2026-06-13"
+    },
+    {
+      "human_reason": "Globally pivot portfolio strategy away from fading geopolitical hedges (Energy) that now face macro headwinds. Reallocate capital to correct critical under-exposure in secular growth themes (AI/Semiconductors) and reinforce high-quality compounders, reflecting a market that is rewarding momentum and balance sheet strength.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "XOM": 0.04,
+          "CVX": 0.02
+        }
+      },
+      "date": "2026-06-13"
     }
   ],
   "portfolio_snapshots": [
@@ -695,6 +764,33 @@
         "UBER": 0.0039,
         "UNH": 0.0343,
         "XOM": 0.0581
+      }
+    },
+    {
+      "date": "2026-06-13",
+      "portfolio_value": 106143.68,
+      "positions_pct": {
+        "ABBV": 0.0086,
+        "AMZN": 0.0045,
+        "COST": 0.0555,
+        "CRM": 0.0094,
+        "CSCO": 0.0137,
+        "CVX": 0.03,
+        "DIS": 0.0047,
+        "DUK": 0.0506,
+        "GOOGL": 0.0441,
+        "IBM": 0.0077,
+        "JNJ": 0.152,
+        "KO": 0.1876,
+        "LMT": 0.0967,
+        "MCD": 0.0483,
+        "MSFT": 0.1104,
+        "NVDA": 0.0058,
+        "ORCL": 0.0017,
+        "PG": 0.0761,
+        "UBER": 0.0039,
+        "UNH": 0.0346,
+        "XOM": 0.0582
       }
     }
   ]
