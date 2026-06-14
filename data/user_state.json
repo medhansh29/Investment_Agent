@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-13",
+  "last_run": "2026-06-14",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -182,9 +182,45 @@
     "Bollinger Bands\u00ae",
     "The Graham Number: A Value Investing Benchmark",
     "The Stochastic RSI (StochRSI)",
-    "The Ichimoku Cloud (Ichimoku Kinko Hyo)"
+    "The Ichimoku Cloud (Ichimoku Kinko Hyo)",
+    "The Efficient Market Hypothesis (EMH)"
   ],
-  "pending_rebalance_suggestions": [],
+  "pending_rebalance_suggestions": [
+    {
+      "human_reason": "Increase exposure to NVDA to capture the dominant AI trend. The current 0.58% weight is causing a severe performance drag against tech benchmarks and must be corrected.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-14"
+    },
+    {
+      "human_reason": "Reduce exposure to the geopolitical 'war premium' which is eroding due to potential US-Iran de-escalation. The thesis for this overweight position has weakened.",
+      "constraints": {},
+      "date": "2026-06-14"
+    },
+    {
+      "human_reason": "The 37% allocation to Consumer Staples is excessively defensive for the current market and is a primary reason for underperformance. This capital should be re-deployed to growth sectors.",
+      "constraints": {},
+      "date": "2026-06-14"
+    },
+    {
+      "human_reason": "The portfolio's structure is misaligned with current market dynamics. A global rebalance is required to shift from an overweight, underperforming defensive posture to participate in the clear AI-driven tech leadership. Capital should be reallocated from Consumer Staples and Defense into a meaningful NVDA position.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-14"
+    }
+  ],
   "portfolio_snapshots": [
     {
       "date": "2026-05-26",
@@ -649,6 +685,33 @@
     },
     {
       "date": "2026-06-13",
+      "portfolio_value": 106143.68,
+      "positions_pct": {
+        "ABBV": 0.0086,
+        "AMZN": 0.0045,
+        "COST": 0.0555,
+        "CRM": 0.0094,
+        "CSCO": 0.0137,
+        "CVX": 0.03,
+        "DIS": 0.0047,
+        "DUK": 0.0506,
+        "GOOGL": 0.0441,
+        "IBM": 0.0077,
+        "JNJ": 0.152,
+        "KO": 0.1876,
+        "LMT": 0.0967,
+        "MCD": 0.0483,
+        "MSFT": 0.1104,
+        "NVDA": 0.0058,
+        "ORCL": 0.0017,
+        "PG": 0.0761,
+        "UBER": 0.0039,
+        "UNH": 0.0346,
+        "XOM": 0.0582
+      }
+    },
+    {
+      "date": "2026-06-14",
       "portfolio_value": 106143.68,
       "positions_pct": {
         "ABBV": 0.0086,
