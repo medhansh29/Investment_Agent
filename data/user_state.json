@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-16",
+  "last_run": "2026-06-17",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -185,7 +185,8 @@
     "The Ichimoku Cloud (Ichimoku Kinko Hyo)",
     "The Efficient Market Hypothesis (EMH)",
     "The Aroon Indicator",
-    "Maximum Drawdown (MDD)"
+    "Maximum Drawdown (MDD)",
+    "Autocorrelation in Financial Time Series"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -333,6 +334,64 @@
         }
       },
       "date": "2026-06-16"
+    },
+    {
+      "human_reason": "Correct the critical under-allocation to the market's primary growth driver. The current weight is causing long-term performance drag and the portfolio's structure is misaligned with stated goals.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-17"
+    },
+    {
+      "human_reason": "Reduce the excessively defensive allocation which is causing severe underperformance. Re-deploy this capital from slow-growth staples into sectors with clear catalysts, such as AI.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05
+        }
+      },
+      "date": "2026-06-17"
+    },
+    {
+      "human_reason": "Reduce the overweight LMT position as its primary catalyst has abated and it is no longer capturing sector-wide tailwinds. Reallocate capital to sectors with stronger forward-looking catalysts.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "LMT": 0.05
+        }
+      },
+      "date": "2026-06-17"
+    },
+    {
+      "human_reason": "Maintain strategic energy exposure as a hedge against the rising probability of energy price shocks stemming from new direct military provocations by Russia in a critical NATO waterway.",
+      "constraints": {
+        "force_weight_floor": {
+          "XOM": 0.05,
+          "CVX": 0.025
+        }
+      },
+      "date": "2026-06-17"
+    },
+    {
+      "human_reason": "A global rebalance is required to pivot from an underperforming, excessively defensive posture to align with clear market leadership in AI. Capital must be reallocated from the lagging Defensive Core and consolidating Defense holdings into a meaningful NVDA position, while maintaining Energy exposure to hedge against new, elevated geopolitical risks.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        },
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "LMT": 0.05
+        }
+      },
+      "date": "2026-06-17"
     }
   ],
   "portfolio_snapshots": [
@@ -903,6 +962,33 @@
         "UBER": 0.0042,
         "UNH": 0.0351,
         "XOM": 0.0563
+      }
+    },
+    {
+      "date": "2026-06-17",
+      "portfolio_value": 105345.73,
+      "positions_pct": {
+        "ABBV": 0.0084,
+        "AMZN": 0.0047,
+        "COST": 0.0562,
+        "CRM": 0.0092,
+        "CSCO": 0.0136,
+        "CVX": 0.0291,
+        "DIS": 0.0048,
+        "DUK": 0.0513,
+        "GOOGL": 0.0461,
+        "IBM": 0.0077,
+        "JNJ": 0.1501,
+        "KO": 0.1835,
+        "LMT": 0.0968,
+        "MCD": 0.0491,
+        "MSFT": 0.1123,
+        "NVDA": 0.0059,
+        "ORCL": 0.0018,
+        "PG": 0.0782,
+        "UBER": 0.0042,
+        "UNH": 0.0347,
+        "XOM": 0.0564
       }
     }
   ]
