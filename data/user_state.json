@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-18",
+  "last_run": "2026-06-19",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -187,7 +187,8 @@
     "The Aroon Indicator",
     "Maximum Drawdown (MDD)",
     "Autocorrelation in Financial Time Series",
-    "Fibonacci Retracement"
+    "Fibonacci Retracement",
+    "Downside Deviation: Measuring Harmful Volatility"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -441,6 +442,54 @@
         }
       },
       "date": "2026-06-18"
+    },
+    {
+      "human_reason": "Correct the critical under-allocation to the market's primary growth driver (NVDA) to align with clear AI-driven tech leadership and mitigate further performance drag.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-06-19"
+    },
+    {
+      "human_reason": "Drastically reduce the excessively defensive allocation which is causing severe underperformance. Re-deploy this capital from slow-growth staples into sectors with clear catalysts, such as AI.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05
+        }
+      },
+      "date": "2026-06-19"
+    },
+    {
+      "human_reason": "Reduce the overweight LMT position as its primary geopolitical catalyst has abated, realizing gains and reallocating to sectors with stronger forward-looking catalysts.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "LMT": 0.05
+        }
+      },
+      "date": "2026-06-19"
+    },
+    {
+      "human_reason": "A global rebalance is required to pivot from an underperforming, excessively defensive posture to align with clear market leadership in AI. Capital must be reallocated from the lagging Defensive Core (KO, PG) and consolidating Defense holdings (LMT) into a meaningful NVDA position to correct the portfolio's critical misalignment with current market dynamics.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        },
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "LMT": 0.05
+        }
+      },
+      "date": "2026-06-19"
     }
   ],
   "portfolio_snapshots": [
@@ -1065,6 +1114,33 @@
         "UBER": 0.0041,
         "UNH": 0.0346,
         "XOM": 0.0568
+      }
+    },
+    {
+      "date": "2026-06-19",
+      "portfolio_value": 102597.17,
+      "positions_pct": {
+        "ABBV": 0.0084,
+        "AMZN": 0.0048,
+        "COST": 0.0556,
+        "CRM": 0.0089,
+        "CSCO": 0.014,
+        "CVX": 0.0288,
+        "DIS": 0.0051,
+        "DUK": 0.0519,
+        "GOOGL": 0.0466,
+        "IBM": 0.0073,
+        "JNJ": 0.1491,
+        "KO": 0.1865,
+        "LMT": 0.0946,
+        "MCD": 0.0489,
+        "MSFT": 0.1109,
+        "NVDA": 0.0062,
+        "ORCL": 0.0018,
+        "PG": 0.0791,
+        "UBER": 0.0042,
+        "UNH": 0.0352,
+        "XOM": 0.0564
       }
     }
   ]
