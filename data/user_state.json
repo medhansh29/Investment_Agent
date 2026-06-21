@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-20",
+  "last_run": "2026-06-21",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -189,7 +189,8 @@
     "Autocorrelation in Financial Time Series",
     "Fibonacci Retracement",
     "Downside Deviation: Measuring Harmful Volatility",
-    "The Chaikin Oscillator"
+    "The Chaikin Oscillator",
+    "The Price-to-Earnings Growth (PEG) Ratio"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -539,6 +540,70 @@
         }
       },
       "date": "2026-06-20"
+    },
+    {
+      "human_reason": "Correct the critical under-allocation to the market's primary growth driver (AI/Semiconductors), which surged +8.93% this week. The current 0.62% weight is the primary cause of portfolio underperformance against tech benchmarks.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1
+        }
+      },
+      "date": "2026-06-21"
+    },
+    {
+      "human_reason": "Drastically reduce the excessive 57.6% allocation to the underperforming Defensive Core (XLP: -2.30%) to fund reallocation into market-leading growth sectors.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07
+        }
+      },
+      "date": "2026-06-21"
+    },
+    {
+      "human_reason": "Reverse the planned reduction and increase Defense allocation as a direct hedge against the rising probability of a wider regional conflict, evidenced by the intensifying proxy war on Israel's northern border.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-21"
+    },
+    {
+      "human_reason": "Maintain strategic energy exposure as an inflation and geopolitical hedge, given Iran's closure of the Strait of Hormuz creates an immediate, severe upside risk to energy prices.",
+      "constraints": {
+        "force_weight_floor": {
+          "XOM": 0.05,
+          "CVX": 0.025
+        }
+      },
+      "date": "2026-06-21"
+    },
+    {
+      "human_reason": "A global rebalance is required to pivot from an underperforming, excessively defensive posture to align with clear market leadership in AI. Capital must be reallocated from the lagging Defensive Core (KO, PG, JNJ) into a meaningful NVDA position. Concurrently, Defense exposure (LMT) must be increased to hedge against the newly elevated and intensifying geopolitical conflict in the Middle East.",
+      "constraints": {
+        "force_include": [
+          "NVDA",
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1,
+          "LMT": 0.1
+        },
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07
+        }
+      },
+      "date": "2026-06-21"
     }
   ],
   "portfolio_snapshots": [
@@ -1194,6 +1259,33 @@
     },
     {
       "date": "2026-06-20",
+      "portfolio_value": 102597.17,
+      "positions_pct": {
+        "ABBV": 0.0084,
+        "AMZN": 0.0048,
+        "COST": 0.0556,
+        "CRM": 0.0089,
+        "CSCO": 0.014,
+        "CVX": 0.0288,
+        "DIS": 0.0051,
+        "DUK": 0.0519,
+        "GOOGL": 0.0466,
+        "IBM": 0.0073,
+        "JNJ": 0.1491,
+        "KO": 0.1865,
+        "LMT": 0.0946,
+        "MCD": 0.0489,
+        "MSFT": 0.1109,
+        "NVDA": 0.0062,
+        "ORCL": 0.0018,
+        "PG": 0.0791,
+        "UBER": 0.0042,
+        "UNH": 0.0352,
+        "XOM": 0.0564
+      }
+    },
+    {
+      "date": "2026-06-21",
       "portfolio_value": 102597.17,
       "positions_pct": {
         "ABBV": 0.0084,
