@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-23",
+  "last_run": "2026-06-24",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -192,7 +192,8 @@
     "The Chaikin Oscillator",
     "The Price-to-Earnings Growth (PEG) Ratio",
     "The Klinger Oscillator (KO)",
-    "The Average True Range (ATR)"
+    "The Average True Range (ATR)",
+    "Discounted Cash Flow (DCF) Valuation"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -724,6 +725,65 @@
         }
       },
       "date": "2026-06-23"
+    },
+    {
+      "human_reason": "Drastically reduce the excessive allocation to the underperforming Defensive Core to fund reallocation into market-leading growth and geopolitical hedges, aligning the portfolio with current market dynamics.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07
+        }
+      },
+      "date": "2026-06-24"
+    },
+    {
+      "human_reason": "Correct the critical under-allocation to the market's primary growth driver (NVDA) to align with clear AI-driven tech leadership and mitigate further performance drag.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1
+        }
+      },
+      "date": "2026-06-24"
+    },
+    {
+      "human_reason": "Investigate the source of the severe, unexplained underperformance of XOM and CVX relative to the XLE benchmark. Consider rotating capital into the benchmark ETF (XLE) to eliminate single-stock risk while maintaining desired sector exposure as a geopolitical hedge.",
+      "constraints": {},
+      "date": "2026-06-24"
+    },
+    {
+      "human_reason": "Increase Defense allocation as a direct hedge against the rising probability of a wider regional conflict, as evidenced by the escalating geopolitical situation reported by the UN.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-24"
+    },
+    {
+      "human_reason": "A global rebalance is required to pivot from an underperforming, excessively defensive posture to align with clear market leadership in AI. Capital must be reallocated from the lagging Defensive Core (KO, PG, JNJ) into a meaningful NVDA position. Concurrently, Defense exposure (LMT) must be increased to hedge against newly elevated and intensifying geopolitical conflicts, while the unexplained underperformance in the Energy sector is investigated.",
+      "constraints": {
+        "force_include": [
+          "NVDA",
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1,
+          "LMT": 0.1
+        },
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07
+        }
+      },
+      "date": "2026-06-24"
     }
   ],
   "portfolio_snapshots": [
@@ -1483,6 +1543,33 @@
         "UBER": 0.0042,
         "UNH": 0.0359,
         "XOM": 0.0572
+      }
+    },
+    {
+      "date": "2026-06-24",
+      "portfolio_value": 103100.24,
+      "positions_pct": {
+        "ABBV": 0.0091,
+        "AMZN": 0.0045,
+        "COST": 0.0556,
+        "CRM": 0.0089,
+        "CSCO": 0.0142,
+        "CVX": 0.0287,
+        "DIS": 0.005,
+        "DUK": 0.0522,
+        "GOOGL": 0.0439,
+        "IBM": 0.0076,
+        "JNJ": 0.155,
+        "KO": 0.1881,
+        "LMT": 0.0925,
+        "MCD": 0.0474,
+        "MSFT": 0.1092,
+        "NVDA": 0.0059,
+        "ORCL": 0.0016,
+        "PG": 0.0787,
+        "UBER": 0.0041,
+        "UNH": 0.0356,
+        "XOM": 0.0564
       }
     }
   ]
