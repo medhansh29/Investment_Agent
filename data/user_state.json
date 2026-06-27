@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-26",
+  "last_run": "2026-06-27",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -195,7 +195,8 @@
     "The Average True Range (ATR)",
     "Discounted Cash Flow (DCF) Valuation",
     "The Williams %R (%R) Oscillator",
-    "The Dividend Discount Model (DDM)"
+    "The Dividend Discount Model (DDM)",
+    "Porter's Five Forces: Analyzing Competitive Landscapes"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -908,37 +909,81 @@
         }
       },
       "date": "2026-06-26"
+    },
+    {
+      "human_reason": "Reduce the excessive 52.93% allocation to the Defensive Core to fund reallocation into market-leading growth sectors and geopolitical hedges, aligning the portfolio with current market dynamics and user intent.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07
+        }
+      },
+      "date": "2026-06-27"
+    },
+    {
+      "human_reason": "Increase Defense allocation to LMT as a direct hedge against the high probability of a wider regional conflict, as evidenced by direct U.S. military action.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-27"
+    },
+    {
+      "human_reason": "Address Unexplained Risk. Liquidate underperforming single-stock positions (UNH, ABBV) and rotate capital into the sector benchmark ETF (XLV) to capture the sector's strong upward trend without idiosyncratic risk.",
+      "constraints": {
+        "force_weight_ceiling": {
+          "UNH": 0.0,
+          "ABBV": 0.0
+        },
+        "force_include": [
+          "XLV"
+        ],
+        "force_weight_floor": {
+          "XLV": 0.05
+        }
+      },
+      "date": "2026-06-27"
+    },
+    {
+      "human_reason": "Correct the critical under-allocation to the market's primary growth driver. Increase NVDA exposure to a meaningful level (10%+) to capture the dominant AI trend and align portfolio structure with clear market leadership.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1
+        }
+      },
+      "date": "2026-06-27"
+    },
+    {
+      "human_reason": "A global rebalance is required to address critical failures and strategic misalignment. The portfolio must pivot from its underperforming, excessively defensive posture by drastically reducing the lagging Defensive Core (KO, PG, JNJ) and eliminating the source of unexplained risk in Healthcare (UNH, ABBV). This capital must be reallocated to align with clear market leadership in AI (NVDA) and to increase the geopolitical hedge in Defense (LMT) against the escalating U.S.-Iran conflict.",
+      "constraints": {
+        "force_include": [
+          "NVDA",
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.1,
+          "LMT": 0.1
+        },
+        "force_weight_ceiling": {
+          "KO": 0.05,
+          "PG": 0.05,
+          "JNJ": 0.07,
+          "UNH": 0.0,
+          "ABBV": 0.0
+        }
+      },
+      "date": "2026-06-27"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-05-27",
-      "portfolio_value": 105288.84,
-      "positions_pct": {
-        "ABBV": 0.0082,
-        "AMZN": 0.005,
-        "COST": 0.0572,
-        "CRM": 0.0102,
-        "CSCO": 0.0135,
-        "CVX": 0.0262,
-        "DIS": 0.0049,
-        "DUK": 0.0513,
-        "GOOGL": 0.0478,
-        "IBM": 0.0071,
-        "JNJ": 0.1466,
-        "KO": 0.1843,
-        "LLY": 0.0101,
-        "LMT": 0.096,
-        "MCD": 0.0477,
-        "MSFT": 0.1258,
-        "NVDA": 0.0061,
-        "ORCL": 0.0018,
-        "PG": 0.0825,
-        "UBER": 0.004,
-        "UNH": 0.0321,
-        "XOM": 0.0594
-      }
-    },
     {
       "date": "2026-05-28",
       "portfolio_value": 106064.44,
@@ -1720,6 +1765,33 @@
         "UBER": 0.0042,
         "UNH": 0.0363,
         "XOM": 0.0561
+      }
+    },
+    {
+      "date": "2026-06-27",
+      "portfolio_value": 104667.34,
+      "positions_pct": {
+        "ABBV": 0.0097,
+        "AMZN": 0.0044,
+        "COST": 0.0546,
+        "CRM": 0.0091,
+        "CSCO": 0.013,
+        "CVX": 0.0278,
+        "DIS": 0.0047,
+        "DUK": 0.0527,
+        "GOOGL": 0.0419,
+        "IBM": 0.0078,
+        "JNJ": 0.163,
+        "KO": 0.1903,
+        "LMT": 0.0921,
+        "MCD": 0.0464,
+        "MSFT": 0.1069,
+        "NVDA": 0.0055,
+        "ORCL": 0.0014,
+        "PG": 0.0769,
+        "UBER": 0.0044,
+        "UNH": 0.0368,
+        "XOM": 0.0548
       }
     }
   ]
