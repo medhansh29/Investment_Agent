@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-27",
+  "last_run": "2026-06-28",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -196,37 +196,73 @@
     "Discounted Cash Flow (DCF) Valuation",
     "The Williams %R (%R) Oscillator",
     "The Dividend Discount Model (DDM)",
-    "Porter's Five Forces: Analyzing Competitive Landscapes"
+    "Porter's Five Forces: Analyzing Competitive Landscapes",
+    "The Debt-to-Equity (D/E) Ratio"
   ],
-  "pending_rebalance_suggestions": [],
-  "portfolio_snapshots": [
+  "pending_rebalance_suggestions": [
     {
-      "date": "2026-05-28",
-      "portfolio_value": 106064.44,
-      "positions_pct": {
-        "ABBV": 0.0081,
-        "AMZN": 0.0051,
-        "COST": 0.0572,
-        "CRM": 0.0098,
-        "CSCO": 0.0136,
-        "CVX": 0.0298,
-        "DIS": 0.0049,
-        "DUK": 0.051,
-        "GOOGL": 0.0473,
-        "IBM": 0.0072,
-        "JNJ": 0.1455,
-        "KO": 0.1863,
-        "LMT": 0.0959,
-        "MCD": 0.0477,
-        "MSFT": 0.1244,
-        "NVDA": 0.0059,
-        "ORCL": 0.0018,
-        "PG": 0.075,
-        "UBER": 0.004,
-        "UNH": 0.0324,
-        "XOM": 0.0598
-      }
+      "human_reason": "Remediate unexplained underperformance and concentration risk in JNJ. Consider rotating capital to the benchmark (XLV) to capture the sector-wide momentum that current holdings are missing.",
+      "constraints": {
+        "force_include": [
+          "XLV"
+        ],
+        "force_weight_floor": {
+          "XLV": 0.1
+        }
+      },
+      "date": "2026-06-28"
     },
+    {
+      "human_reason": "STRATEGY PIVOT: Concentrate further in LMT to capitalize on the confirmed geopolitical tailwind and fundamental strength from PrSM missile production expansion.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-06-28"
+    },
+    {
+      "human_reason": "STRATEGY PIVOT: Increase energy exposure as a direct hedge against cited US/Iran conflict risks, as recommended by macro analysis.",
+      "constraints": {
+        "force_include": [
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "XOM": 0.06
+        }
+      },
+      "date": "2026-06-28"
+    },
+    {
+      "human_reason": "Reduce exposure to rate-sensitive large-cap tech, which faces direct headwinds from the stated hawkish Fed policy.",
+      "constraints": {
+        "force_include": [],
+        "force_weight_floor": {}
+      },
+      "date": "2026-06-28"
+    },
+    {
+      "human_reason": "Global strategy pivot: De-risk the portfolio by addressing the 'Unexplained Risk' in Healthcare. Reallocate capital from the over-concentrated and underperforming JNJ position into strategic, news-driven opportunities in Defense (LMT) and Energy (XOM) to hedge against documented geopolitical threats.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "XOM",
+          "XLV"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "XOM": 0.06,
+          "XLV": 0.1
+        }
+      },
+      "date": "2026-06-28"
+    }
+  ],
+  "portfolio_snapshots": [
     {
       "date": "2026-05-29",
       "portfolio_value": 106093.4,
@@ -985,6 +1021,33 @@
     },
     {
       "date": "2026-06-27",
+      "portfolio_value": 104667.34,
+      "positions_pct": {
+        "ABBV": 0.0097,
+        "AMZN": 0.0044,
+        "COST": 0.0546,
+        "CRM": 0.0091,
+        "CSCO": 0.013,
+        "CVX": 0.0278,
+        "DIS": 0.0047,
+        "DUK": 0.0527,
+        "GOOGL": 0.0419,
+        "IBM": 0.0078,
+        "JNJ": 0.163,
+        "KO": 0.1903,
+        "LMT": 0.0921,
+        "MCD": 0.0464,
+        "MSFT": 0.1069,
+        "NVDA": 0.0055,
+        "ORCL": 0.0014,
+        "PG": 0.0769,
+        "UBER": 0.0044,
+        "UNH": 0.0368,
+        "XOM": 0.0548
+      }
+    },
+    {
+      "date": "2026-06-28",
       "portfolio_value": 104667.34,
       "positions_pct": {
         "ABBV": 0.0097,
