@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-06-30",
+  "last_run": "2026-07-01",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -199,7 +199,8 @@
     "Porter's Five Forces: Analyzing Competitive Landscapes",
     "The Debt-to-Equity (D/E) Ratio",
     "Copula Functions: Modeling Non-Linear Dependencies",
-    "Economic Value Added (EVA)"
+    "Economic Value Added (EVA)",
+    "The Price-to-Sales (P/S) Ratio"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -384,36 +385,70 @@
         }
       },
       "date": "2026-06-30"
+    },
+    {
+      "human_reason": "Remediate unexplained underperformance and concentration risk in JNJ. Consider rotating capital to the benchmark (XLV) to capture the sector-wide momentum that current holdings are missing.",
+      "constraints": {
+        "force_include": [
+          "XLV"
+        ],
+        "force_weight_floor": {
+          "XLV": 0.1
+        }
+      },
+      "date": "2026-07-01"
+    },
+    {
+      "human_reason": "STRATEGY PIVOT: Concentrate further in LMT to capitalize on the confirmed geopolitical tailwind and fundamental strength from PrSM missile production expansion.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-01"
+    },
+    {
+      "human_reason": "Reduce exposure to rate-sensitive large-cap tech, which faces direct headwinds from the stated hawkish Fed policy.",
+      "constraints": {
+        "force_include": [],
+        "force_weight_floor": {}
+      },
+      "date": "2026-07-01"
+    },
+    {
+      "human_reason": "STRATEGY PIVOT: Increase energy exposure as a direct hedge against cited US/Iran conflict risks, as recommended by macro analysis.",
+      "constraints": {
+        "force_include": [
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "XOM": 0.06
+        }
+      },
+      "date": "2026-07-01"
+    },
+    {
+      "human_reason": "Global strategy pivot: De-risk the portfolio by addressing the 'Unexplained Risk' in Healthcare. Reallocate capital from the over-concentrated and underperforming JNJ position into strategic, news-driven opportunities in Defense (LMT) and Energy (XOM) to hedge against documented geopolitical threats, while adding XLV to regain broad sector momentum.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "XOM",
+          "XLV"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "XOM": 0.06,
+          "XLV": 0.1
+        }
+      },
+      "date": "2026-07-01"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-05-31",
-      "portfolio_value": 105331.53,
-      "positions_pct": {
-        "ABBV": 0.0083,
-        "AMZN": 0.0051,
-        "COST": 0.0545,
-        "CRM": 0.0109,
-        "CSCO": 0.0137,
-        "CVX": 0.0294,
-        "DIS": 0.0048,
-        "DUK": 0.0501,
-        "GOOGL": 0.0469,
-        "IBM": 0.0085,
-        "JNJ": 0.1433,
-        "KO": 0.1808,
-        "LMT": 0.0957,
-        "MCD": 0.0477,
-        "MSFT": 0.1282,
-        "NVDA": 0.006,
-        "ORCL": 0.0021,
-        "PG": 0.0736,
-        "UBER": 0.004,
-        "UNH": 0.0325,
-        "XOM": 0.0579
-      }
-    },
     {
       "date": "2026-06-01",
       "portfolio_value": 106219.46,
@@ -1195,6 +1230,33 @@
         "UBER": 0.0043,
         "UNH": 0.036,
         "XOM": 0.0544
+      }
+    },
+    {
+      "date": "2026-07-01",
+      "portfolio_value": 104081.39,
+      "positions_pct": {
+        "ABBV": 0.0096,
+        "AMZN": 0.0046,
+        "COST": 0.0541,
+        "CRM": 0.009,
+        "CSCO": 0.0135,
+        "CVX": 0.0271,
+        "DIS": 0.0046,
+        "DUK": 0.0523,
+        "GOOGL": 0.0444,
+        "IBM": 0.0081,
+        "JNJ": 0.1632,
+        "KO": 0.1884,
+        "LMT": 0.092,
+        "MCD": 0.0468,
+        "MSFT": 0.1083,
+        "NVDA": 0.0057,
+        "ORCL": 0.0014,
+        "PG": 0.0759,
+        "UBER": 0.0042,
+        "UNH": 0.0359,
+        "XOM": 0.0551
       }
     }
   ]
