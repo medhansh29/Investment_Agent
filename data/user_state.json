@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-07-02",
+  "last_run": "2026-07-03",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -201,7 +201,8 @@
     "Copula Functions: Modeling Non-Linear Dependencies",
     "Economic Value Added (EVA)",
     "The Price-to-Sales (P/S) Ratio",
-    "The Price-to-Book (P/B) Ratio"
+    "The Price-to-Book (P/B) Ratio",
+    "Principal Component Analysis (PCA) for Portfolio Risk"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -257,36 +258,87 @@
         }
       },
       "date": "2026-07-02"
+    },
+    {
+      "human_reason": "The heavy concentration in Consumer Staples is underperforming its benchmark. Reallocate from the overweight KO position into other quality names within the sector to reduce idiosyncratic risk.",
+      "constraints": {
+        "force_include": [
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-03"
+    },
+    {
+      "human_reason": "Concentrate in LMT due to confirmed geopolitical demand and fundamental strength in PrSM production.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-03"
+    },
+    {
+      "human_reason": "De-risk from the significant JNJ underperformance versus the XLV benchmark. Reallocate capital within healthcare to UNH to mitigate concentration risk and better track the strong sector performance.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-03"
+    },
+    {
+      "human_reason": "Reduce exposure to the underperforming Energy sector and reallocate to sectors with confirmed tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-03"
+    },
+    {
+      "human_reason": "Given confirmed macro headwinds for Technology, review and potentially trim positions lacking near-term catalysts in favor of sectors with clearer tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-03"
+    },
+    {
+      "human_reason": "Systematically reduce exposure to sectors with identified risks: the unexplained reversion risk in Consumer Staples (KO) and the fundamental underperformance in Energy (XOM). Reallocate this capital to Defense (LMT) to align with geopolitical tailwinds and further diversify within Healthcare (UNH), addressing concentration risk.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-03"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-06-02",
-      "portfolio_value": 105131.64,
-      "positions_pct": {
-        "ABBV": 0.0082,
-        "AMZN": 0.0049,
-        "COST": 0.0541,
-        "CRM": 0.0118,
-        "CSCO": 0.0139,
-        "CVX": 0.0301,
-        "DIS": 0.0049,
-        "DUK": 0.0514,
-        "GOOGL": 0.0457,
-        "IBM": 0.0088,
-        "JNJ": 0.1434,
-        "KO": 0.1807,
-        "LMT": 0.0936,
-        "MCD": 0.047,
-        "MSFT": 0.1286,
-        "NVDA": 0.0064,
-        "ORCL": 0.0023,
-        "PG": 0.0721,
-        "UBER": 0.0042,
-        "UNH": 0.0324,
-        "XOM": 0.0597
-      }
-    },
     {
       "date": "2026-06-03",
       "portfolio_value": 104657.13,
@@ -1068,6 +1120,34 @@
         "UBER": 0.0042,
         "UNH": 0.0366,
         "XOM": 0.0546
+      }
+    },
+    {
+      "date": "2026-07-03",
+      "portfolio_value": 107621.34,
+      "positions_pct": {
+        "ABBV": 0.0097,
+        "AMZN": 0.0045,
+        "CAT": 0.009,
+        "COST": 0.0531,
+        "CRM": 0.0093,
+        "CSCO": 0.0126,
+        "CVX": 0.0267,
+        "DIS": 0.0046,
+        "DUK": 0.0518,
+        "GOOGL": 0.0435,
+        "IBM": 0.0081,
+        "JNJ": 0.1638,
+        "KO": 0.1884,
+        "LMT": 0.0964,
+        "MCD": 0.0469,
+        "MSFT": 0.1089,
+        "NVDA": 0.0054,
+        "ORCL": 0.0013,
+        "PG": 0.076,
+        "UBER": 0.0041,
+        "UNH": 0.0356,
+        "XOM": 0.0535
       }
     }
   ]
