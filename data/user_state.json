@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-07-03",
+  "last_run": "2026-07-04",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -202,7 +202,8 @@
     "Economic Value Added (EVA)",
     "The Price-to-Sales (P/S) Ratio",
     "The Price-to-Book (P/B) Ratio",
-    "Principal Component Analysis (PCA) for Portfolio Risk"
+    "Principal Component Analysis (PCA) for Portfolio Risk",
+    "The Z-Score: Quantifying Statistical Anomalies"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -336,36 +337,75 @@
         }
       },
       "date": "2026-07-03"
+    },
+    {
+      "human_reason": "De-risk from the significant JNJ underperformance versus the XLV benchmark. Reallocate capital within healthcare to UNH to mitigate concentration risk and better track the strong sector performance.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-04"
+    },
+    {
+      "human_reason": "Given confirmed macro headwinds for Technology, review and potentially trim positions lacking near-term catalysts in favor of sectors with clearer tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-04"
+    },
+    {
+      "human_reason": "Reduce exposure to the underperforming Energy sector and reallocate to sectors with confirmed tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-04"
+    },
+    {
+      "human_reason": "While outperforming this week, the heavy concentration in KO is a structural risk. Reallocate capital into other quality staples like COST and PG to reduce single-stock risk.",
+      "constraints": {
+        "force_include": [
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-04"
+    },
+    {
+      "human_reason": "Systematically reduce exposure to sectors with identified risks: the fundamental underperformance in Energy (XOM) and the concentration risk in Healthcare (JNJ). Reallocate this capital to Defense (LMT) to align with geopolitical tailwinds and further diversify within Healthcare (UNH), addressing concentration risk.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-04"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-06-03",
-      "portfolio_value": 104657.13,
-      "positions_pct": {
-        "ABBV": 0.0083,
-        "AMZN": 0.0049,
-        "COST": 0.0547,
-        "CRM": 0.0115,
-        "CSCO": 0.0147,
-        "CVX": 0.0305,
-        "DIS": 0.0049,
-        "DUK": 0.0516,
-        "GOOGL": 0.0452,
-        "IBM": 0.0093,
-        "JNJ": 0.144,
-        "KO": 0.181,
-        "LMT": 0.0931,
-        "MCD": 0.0475,
-        "MSFT": 0.1252,
-        "NVDA": 0.0064,
-        "ORCL": 0.0023,
-        "PG": 0.0724,
-        "UBER": 0.0041,
-        "UNH": 0.0324,
-        "XOM": 0.0603
-      }
-    },
     {
       "date": "2026-06-04",
       "portfolio_value": 104452.51,
@@ -1125,6 +1165,34 @@
     {
       "date": "2026-07-03",
       "portfolio_value": 107621.34,
+      "positions_pct": {
+        "ABBV": 0.0097,
+        "AMZN": 0.0045,
+        "CAT": 0.009,
+        "COST": 0.0531,
+        "CRM": 0.0093,
+        "CSCO": 0.0126,
+        "CVX": 0.0267,
+        "DIS": 0.0046,
+        "DUK": 0.0518,
+        "GOOGL": 0.0435,
+        "IBM": 0.0081,
+        "JNJ": 0.1638,
+        "KO": 0.1884,
+        "LMT": 0.0964,
+        "MCD": 0.0469,
+        "MSFT": 0.1089,
+        "NVDA": 0.0054,
+        "ORCL": 0.0013,
+        "PG": 0.076,
+        "UBER": 0.0041,
+        "UNH": 0.0356,
+        "XOM": 0.0535
+      }
+    },
+    {
+      "date": "2026-07-04",
+      "portfolio_value": 107621.33,
       "positions_pct": {
         "ABBV": 0.0097,
         "AMZN": 0.0045,
