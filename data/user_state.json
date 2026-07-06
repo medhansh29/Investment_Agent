@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-07-05",
+  "last_run": "2026-07-06",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -204,7 +204,8 @@
     "The Price-to-Book (P/B) Ratio",
     "Principal Component Analysis (PCA) for Portfolio Risk",
     "The Z-Score: Quantifying Statistical Anomalies",
-    "The Average Directional Index (ADX)"
+    "The Average Directional Index (ADX)",
+    "The Efficient Frontier"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -456,36 +457,77 @@
         }
       },
       "date": "2026-07-05"
+    },
+    {
+      "human_reason": "De-risk from the significant JNJ underperformance versus the XLV benchmark. Reallocate capital within healthcare to UNH to mitigate concentration risk and better track the strong sector performance.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-06"
+    },
+    {
+      "human_reason": "The heavy concentration in KO is underperforming its benchmark. Reallocate from the overweight KO position into other quality names within the sector (COST, PG) to reduce idiosyncratic risk.",
+      "constraints": {
+        "force_include": [
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-06"
+    },
+    {
+      "human_reason": "Reduce exposure to the Energy sector due to significant and unexplained divergence from its benchmark, representing an unknown risk profile. Reallocate to sectors with confirmed tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-06"
+    },
+    {
+      "human_reason": "Increase allocation to LMT to align with confirmed geopolitical demand and fundamental strength from its PrSM production expansion, capitalizing on the current consolidation.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-06"
+    },
+    {
+      "human_reason": "Systematically reduce exposure to assets with identified structural risks: the significant benchmark underperformance in Healthcare (JNJ), the idiosyncratic concentration in Consumer Staples (KO), and the unexplained volatility in Energy (XOM, CVX). Reallocate capital towards sectors with confirmed fundamental tailwinds (Defense - LMT) and diversify within high-performing sectors (Healthcare - UNH) to mitigate concentration risk.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH",
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05,
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-06"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-06-05",
-      "portfolio_value": 104458.81,
-      "positions_pct": {
-        "ABBV": 0.0082,
-        "AMZN": 0.0048,
-        "COST": 0.0561,
-        "CRM": 0.0108,
-        "CSCO": 0.0149,
-        "CVX": 0.0308,
-        "DIS": 0.0048,
-        "DUK": 0.0517,
-        "GOOGL": 0.046,
-        "IBM": 0.0085,
-        "JNJ": 0.1444,
-        "KO": 0.1779,
-        "LMT": 0.0945,
-        "MCD": 0.0471,
-        "MSFT": 0.1224,
-        "NVDA": 0.0062,
-        "ORCL": 0.0022,
-        "PG": 0.0733,
-        "UBER": 0.0041,
-        "UNH": 0.0342,
-        "XOM": 0.0611
-      }
-    },
     {
       "date": "2026-06-06",
       "portfolio_value": 105328.94,
@@ -1270,6 +1312,34 @@
         "UBER": 0.0041,
         "UNH": 0.0356,
         "XOM": 0.0535
+      }
+    },
+    {
+      "date": "2026-07-06",
+      "portfolio_value": 107368.4,
+      "positions_pct": {
+        "ABBV": 0.0097,
+        "AMZN": 0.0045,
+        "CAT": 0.009,
+        "COST": 0.0529,
+        "CRM": 0.0093,
+        "CSCO": 0.0126,
+        "CVX": 0.0268,
+        "DIS": 0.0046,
+        "DUK": 0.0519,
+        "GOOGL": 0.0435,
+        "IBM": 0.0081,
+        "JNJ": 0.1638,
+        "KO": 0.1883,
+        "LMT": 0.0959,
+        "MCD": 0.0469,
+        "MSFT": 0.1091,
+        "NVDA": 0.0055,
+        "ORCL": 0.0013,
+        "PG": 0.0761,
+        "UBER": 0.0042,
+        "UNH": 0.0355,
+        "XOM": 0.0536
       }
     }
   ]
