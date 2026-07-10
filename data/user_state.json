@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-07-09",
+  "last_run": "2026-07-10",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -720,36 +720,84 @@
         }
       },
       "date": "2026-07-09"
+    },
+    {
+      "human_reason": "De-risk from the significant JNJ underperformance versus the XLV benchmark. Reallocate capital within healthcare to UNH to mitigate concentration risk and better track the strong sector performance.",
+      "constraints": {
+        "force_include": [
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-10"
+    },
+    {
+      "human_reason": "Reduce exposure to the Energy sector due to significant and unexplained divergence from macro fundamentals, representing an unknown risk profile.",
+      "constraints": {},
+      "date": "2026-07-10"
+    },
+    {
+      "human_reason": "The heavy concentration in KO is a structural risk. Reallocate from the overweight KO position into other quality names within the sector (COST, PG) to reduce idiosyncratic risk.",
+      "constraints": {
+        "force_include": [
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-10"
+    },
+    {
+      "human_reason": "Given confirmed macro headwinds for Technology, review and potentially trim positions lacking near-term catalysts in favor of sectors with clearer tailwinds.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05
+        }
+      },
+      "date": "2026-07-10"
+    },
+    {
+      "human_reason": "Increase allocation to LMT to align with confirmed geopolitical demand and fundamental strength from its PrSM production expansion, capitalizing on the current consolidation.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-07-10"
+    },
+    {
+      "human_reason": "Systematically reduce exposure to assets with identified structural risks: the significant benchmark underperformance and concentration in Healthcare (JNJ), the idiosyncratic concentration in Consumer Staples (KO), and the unexplained volatility in Energy (XOM, CVX). Reallocate capital towards sectors with confirmed fundamental tailwinds (Defense - LMT) and diversify within high-performing sectors (Healthcare - UNH; Staples - COST, PG) to mitigate concentration risk.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "UNH",
+          "COST",
+          "PG"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "UNH": 0.05,
+          "COST": 0.07,
+          "PG": 0.09
+        }
+      },
+      "date": "2026-07-10"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-06-09",
-      "portfolio_value": 104932.5,
-      "positions_pct": {
-        "ABBV": 0.0085,
-        "AMZN": 0.0047,
-        "COST": 0.0557,
-        "CRM": 0.0104,
-        "CSCO": 0.0142,
-        "CVX": 0.0306,
-        "DIS": 0.0047,
-        "DUK": 0.05,
-        "GOOGL": 0.0451,
-        "IBM": 0.008,
-        "JNJ": 0.1482,
-        "KO": 0.1821,
-        "LMT": 0.0942,
-        "MCD": 0.0476,
-        "MSFT": 0.1179,
-        "NVDA": 0.006,
-        "ORCL": 0.002,
-        "PG": 0.0747,
-        "UBER": 0.004,
-        "UNH": 0.0348,
-        "XOM": 0.0606
-      }
-    },
     {
       "date": "2026-06-10",
       "portfolio_value": 105726.13,
@@ -1536,6 +1584,33 @@
         "UBER": 0.0041,
         "UNH": 0.0358,
         "XOM": 0.0556
+      }
+    },
+    {
+      "date": "2026-07-10",
+      "portfolio_value": 105698.33,
+      "positions_pct": {
+        "ABBV": 0.0094,
+        "AMZN": 0.0047,
+        "CAT": 0.0089,
+        "COST": 0.0518,
+        "CRM": 0.0092,
+        "CSCO": 0.0134,
+        "CVX": 0.028,
+        "DIS": 0.0046,
+        "DUK": 0.051,
+        "GOOGL": 0.044,
+        "JNJ": 0.1639,
+        "KO": 0.1884,
+        "LMT": 0.0931,
+        "MCD": 0.0472,
+        "MSFT": 0.109,
+        "NVDA": 0.0058,
+        "ORCL": 0.0014,
+        "PG": 0.0751,
+        "UBER": 0.0042,
+        "UNH": 0.0367,
+        "XOM": 0.0547
       }
     }
   ]
