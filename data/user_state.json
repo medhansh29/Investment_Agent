@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-07-11",
+  "last_run": "2026-07-12",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -209,37 +209,69 @@
     "Monte Carlo Simulation in Finance",
     "The Gordon Growth Model (GGM)",
     "Enterprise Value (EV)",
-    "VIX Futures Term Structure: Contango & Backwardation"
+    "VIX Futures Term Structure: Contango & Backwardation",
+    "Implementation Shortfall"
   ],
-  "pending_rebalance_suggestions": [],
-  "portfolio_snapshots": [
+  "pending_rebalance_suggestions": [
     {
-      "date": "2026-06-12",
-      "portfolio_value": 105943.46,
-      "positions_pct": {
-        "ABBV": 0.0085,
-        "AMZN": 0.0046,
-        "COST": 0.0553,
-        "CRM": 0.0095,
-        "CSCO": 0.0138,
-        "CVX": 0.0299,
-        "DIS": 0.0047,
-        "DUK": 0.0503,
-        "GOOGL": 0.0444,
-        "IBM": 0.0079,
-        "JNJ": 0.1507,
-        "KO": 0.1876,
-        "LMT": 0.098,
-        "MCD": 0.0484,
-        "MSFT": 0.1112,
-        "NVDA": 0.0058,
-        "ORCL": 0.0017,
-        "PG": 0.0756,
-        "UBER": 0.0039,
-        "UNH": 0.0343,
-        "XOM": 0.0581
-      }
+      "human_reason": "FLAG: Unexplained Risk. The holdings are decoupling from their sector's primary driver. The strategic imperative is to gain exposure to rising energy prices; these specific assets are failing to do so. An immediate review or rotation into assets that better track the commodity is required.",
+      "constraints": {
+        "force_include": [
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "XOM": 0.06,
+          "CVX": 0.03
+        }
+      },
+      "date": "2026-07-12"
     },
+    {
+      "human_reason": "FLAG: Unexplained Risk. This large allocation is failing to track its benchmark for unknown reasons. This is a critical failure of the current stock selection strategy. Investigation into the specific laggards is required.",
+      "constraints": {
+        "force_include": [],
+        "force_weight_floor": {}
+      },
+      "date": "2026-07-12"
+    },
+    {
+      "human_reason": "The divergence is explained and appears temporary. Given the strong fundamental outlook ('92% GPU market share'), this weakness represents a potential strategic entry point. Increasing allocation is suggested to capitalize on the 'sell the news' dip.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.01
+        }
+      },
+      "date": "2026-07-12"
+    },
+    {
+      "human_reason": "The extreme concentration in this slightly underperforming category presents a risk. The portfolio's defensive posture is overly reliant on two specific company outcomes. This weighting should be reviewed for potential diversification.",
+      "constraints": {
+        "force_include": [],
+        "force_weight_floor": {}
+      },
+      "date": "2026-07-12"
+    },
+    {
+      "human_reason": "Global strategy pivot is required. The portfolio is failing to capitalize on the dominant macro theme of geopolitical conflict. The clear mandate from the RAG findings is to increase exposure to Defense (LMT) and Energy (XOM, CVX) to align with this high-conviction trend.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "XOM": 0.06
+        }
+      },
+      "date": "2026-07-12"
+    }
+  ],
+  "portfolio_snapshots": [
     {
       "date": "2026-06-13",
       "portfolio_value": 106143.68,
@@ -1003,6 +1035,33 @@
     },
     {
       "date": "2026-07-11",
+      "portfolio_value": 106003.04,
+      "positions_pct": {
+        "ABBV": 0.0094,
+        "AMZN": 0.0046,
+        "CAT": 0.009,
+        "COST": 0.0519,
+        "CRM": 0.0092,
+        "CSCO": 0.0137,
+        "CVX": 0.0283,
+        "DIS": 0.0045,
+        "DUK": 0.0509,
+        "GOOGL": 0.0438,
+        "JNJ": 0.1624,
+        "KO": 0.1898,
+        "LMT": 0.0938,
+        "MCD": 0.0466,
+        "MSFT": 0.109,
+        "NVDA": 0.006,
+        "ORCL": 0.0013,
+        "PG": 0.0749,
+        "UBER": 0.0042,
+        "UNH": 0.0361,
+        "XOM": 0.055
+      }
+    },
+    {
+      "date": "2026-07-12",
       "portfolio_value": 106003.04,
       "positions_pct": {
         "ABBV": 0.0094,
