@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-08-02",
+  "last_run": "2026-08-03",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -231,7 +231,8 @@
     "The Gini Coefficient: Measuring Portfolio Concentration",
     "The Price of Anarchy (PoA)",
     "The Endowment Effect: Overcoming Ownership Bias",
-    "The Herding Effect: Quantifying Crowd Behavior"
+    "The Herding Effect: Quantifying Crowd Behavior",
+    "Greenblatt's Magic Formula"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -1431,37 +1432,73 @@
         }
       },
       "date": "2026-08-02"
+    },
+    {
+      "human_reason": "The portfolio is failing to capitalize on its primary macro driver (geopolitical conflict). The strategic imperative is to build a core position to align with this high-conviction theme, capitalizing on the temporary consolidation.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-08-03"
+    },
+    {
+      "human_reason": "The divergence is explained and appears temporary. Given the strong fundamental outlook (92% GPU market share), this weakness represents a potential strategic entry point. Increasing allocation is suggested to capitalize on the macro-driven dip.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.01
+        }
+      },
+      "date": "2026-08-03"
+    },
+    {
+      "human_reason": "FLAG: Explained Negative Divergence. The drop is explained by fundamental headwinds (pricing, competition). The portfolio's defensive posture is overly reliant on a single asset facing increasing risks. A review to diversify this allocation is required to mitigate company-specific threats.",
+      "constraints": {
+        "force_include": [],
+        "force_weight_floor": {}
+      },
+      "date": "2026-08-03"
+    },
+    {
+      "human_reason": "FLAG: Strategic Failure. The portfolio has zero exposure to the energy sector despite overwhelming geopolitical and inflationary catalysts. An immediate rotation into assets that track commodity prices (e.g., XOM, CVX) is required to hedge risk and capture upside.",
+      "constraints": {
+        "force_include": [
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "XOM": 0.06,
+          "CVX": 0.03
+        }
+      },
+      "date": "2026-08-03"
+    },
+    {
+      "human_reason": "Global strategy pivot is required. The portfolio is failing to capitalize on the dominant macro theme of geopolitical conflict and is not adequately hedged against inflation. The clear mandate from the RAG findings is to build positions in Defense (LMT) and Energy (XOM, CVX) while tactically entering Tech (NVDA) on its macro-driven weakness.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "XOM",
+          "CVX",
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "XOM": 0.06,
+          "CVX": 0.03,
+          "NVDA": 0.01
+        }
+      },
+      "date": "2026-08-03"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-07-04",
-      "portfolio_value": 107621.33,
-      "positions_pct": {
-        "ABBV": 0.0097,
-        "AMZN": 0.0045,
-        "CAT": 0.009,
-        "COST": 0.0531,
-        "CRM": 0.0093,
-        "CSCO": 0.0126,
-        "CVX": 0.0267,
-        "DIS": 0.0046,
-        "DUK": 0.0518,
-        "GOOGL": 0.0435,
-        "IBM": 0.0081,
-        "JNJ": 0.1638,
-        "KO": 0.1884,
-        "LMT": 0.0964,
-        "MCD": 0.0469,
-        "MSFT": 0.1089,
-        "NVDA": 0.0054,
-        "ORCL": 0.0013,
-        "PG": 0.076,
-        "UBER": 0.0041,
-        "UNH": 0.0356,
-        "XOM": 0.0535
-      }
-    },
     {
       "date": "2026-07-05",
       "portfolio_value": 107621.33,
@@ -1783,6 +1820,11 @@
     },
     {
       "date": "2026-08-02",
+      "portfolio_value": 100000.0,
+      "positions_pct": {}
+    },
+    {
+      "date": "2026-08-03",
       "portfolio_value": 100000.0,
       "positions_pct": {}
     }
