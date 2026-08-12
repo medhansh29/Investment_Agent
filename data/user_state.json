@@ -71,7 +71,7 @@
       "SPGI"
     ]
   },
-  "last_run": "2026-08-11",
+  "last_run": "2026-08-12",
   "masterclass_history": [
     "The Capital Asset Pricing Model (CAPM)",
     "The Beta Coefficient (\\beta)",
@@ -240,7 +240,8 @@
     "EBITDA: Isolating Operational Profitability",
     "Anchoring Bias: The Peril of First Impressions",
     "The Equity Risk Premium (ERP)",
-    "The Purchasing Managers' Index (PMI)"
+    "The Purchasing Managers' Index (PMI)",
+    "Implied Volatility (IV) & The Volatility Smile"
   ],
   "pending_rebalance_suggestions": [
     {
@@ -1952,14 +1953,65 @@
         }
       },
       "date": "2026-08-11"
+    },
+    {
+      "human_reason": "The portfolio is failing to capitalize on its primary macro driver (geopolitical conflict). The strategic imperative is to build a core position to align with this high-conviction theme, capitalizing on the temporary consolidation in LMT.",
+      "constraints": {
+        "force_include": [
+          "LMT"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1
+        }
+      },
+      "date": "2026-08-12"
+    },
+    {
+      "human_reason": "FLAG: Strategic Failure. The portfolio has zero exposure to the energy sector despite overwhelming geopolitical and inflationary catalysts. An immediate rotation into assets that track commodity prices (e.g., XOM, CVX) is required to hedge risk and capture upside.",
+      "constraints": {
+        "force_include": [
+          "XOM",
+          "CVX"
+        ],
+        "force_weight_floor": {
+          "XOM": 0.06,
+          "CVX": 0.03
+        }
+      },
+      "date": "2026-08-12"
+    },
+    {
+      "human_reason": "The divergence is explained and appears temporary. Given the strong fundamental outlook (92% GPU market share) and a new macro tailwind (potential Fed pivot), this weakness represents a potential strategic entry point. A tactical allocation is suggested to capitalize on the macro-driven dip.",
+      "constraints": {
+        "force_include": [
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-08-12"
+    },
+    {
+      "human_reason": "Global strategy pivot is required. The portfolio is uninvested and thus critically misaligned with dominant macro themes. The clear mandate from the RAG findings is to build positions to capture geopolitical upside (LMT), hedge against geopolitical risk and inflation (XOM, CVX), and tactically enter high-conviction Tech (NVDA) on a favorable monetary policy signal.",
+      "constraints": {
+        "force_include": [
+          "LMT",
+          "XOM",
+          "CVX",
+          "NVDA"
+        ],
+        "force_weight_floor": {
+          "LMT": 0.1,
+          "XOM": 0.06,
+          "CVX": 0.03,
+          "NVDA": 0.05
+        }
+      },
+      "date": "2026-08-12"
     }
   ],
   "portfolio_snapshots": [
-    {
-      "date": "2026-07-13",
-      "portfolio_value": 100000.0,
-      "positions_pct": {}
-    },
     {
       "date": "2026-07-14",
       "portfolio_value": 100000.0,
@@ -2102,6 +2154,11 @@
     },
     {
       "date": "2026-08-11",
+      "portfolio_value": 100000.0,
+      "positions_pct": {}
+    },
+    {
+      "date": "2026-08-12",
       "portfolio_value": 100000.0,
       "positions_pct": {}
     }
